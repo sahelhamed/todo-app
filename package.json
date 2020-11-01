@@ -23,6 +23,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "postcss src/CSS/tailwind.css -o public/build/tailwind.css",
+    "watch": "postcss src/CSS/tailwind.css -o public/build/tailwind.css --watch",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

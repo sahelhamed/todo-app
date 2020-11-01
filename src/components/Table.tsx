@@ -49,7 +49,7 @@ const Table: React.FC<Props> = ({ data, columns }) => {
         {columns.map((item: Column) => (
           <th
             key={item.id}
-            className="py-5 border-t border-b border-gray-500 text-gray-600"
+            className="py-5 border-t border-b border-gray-500 text-gray-600 font-Roboto"
           >
             {item.title}
           </th>
@@ -62,7 +62,7 @@ const Table: React.FC<Props> = ({ data, columns }) => {
           {columns.map((columnItem: Column) => (
             <td
               key={columnItem.id}
-              className="py-12 border-b border-gray-500 text-center text-black"
+              className="py-12 border-b border-gray-500 text-center text-black font-Roboto"
             >
               {generateCell(item, columnItem)}
             </td>
