@@ -1,13 +1,12 @@
 // Node_modules
-import React, { ReactText } from 'react';
-// import PropTypes from 'prop-types';
+import React, { ReactElement } from 'react';
 
 interface Props {
-  title: string | ReactText;
-  isActive: boolean;
+  title?: string | number;
+  isActive?: boolean;
 }
 
-const Label: React.FC<Props> = ({ title, isActive }) => {
+const Label = ({ title, isActive }: Props): ReactElement => {
   return (
     <span
       className={`${
@@ -17,13 +16,6 @@ const Label: React.FC<Props> = ({ title, isActive }) => {
       {title}
     </span>
   );
-};
-
-Label.propTypes = {
-  /*
-  title: PropTypes.string,
-  isActive: PropTypes.bool,
-     */
 };
 
 Label.defaultProps = {

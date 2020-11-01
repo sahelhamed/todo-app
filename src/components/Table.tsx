@@ -1,6 +1,5 @@
 // Node_modules
 import React, { ReactElement } from 'react';
-// import PropTypes from 'prop-types';
 // Models
 import { Column, Data } from '../models/table';
 // Constants
@@ -13,7 +12,7 @@ interface Props {
   columns: Column[];
 }
 
-const Table: React.FC<Props> = ({ data, columns }) => {
+const Table = ({ data, columns }: Props): ReactElement => {
   /**
    * A function for generate cell in table
    * @param item: object type of data model
@@ -71,32 +70,6 @@ const Table: React.FC<Props> = ({ data, columns }) => {
       ))}
     </table>
   );
-};
-
-Table.propTypes = {
-  /*
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      task: PropTypes.number,
-      status: PropTypes.string,
-      date: PropTypes.string,
-      time: PropTypes.string,
-    }),
-  ),
-  columns: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      title: PropTypes.string,
-      column: PropTypes.string,
-    }),
-  ),
-     */
-};
-
-Table.defaultProps = {
-  data: [],
-  columns: [],
 };
 
 export default Table;

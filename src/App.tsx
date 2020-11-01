@@ -1,9 +1,9 @@
 // Node_modules
-import React from 'react';
+import React, { ReactElement } from 'react';
 // Components
 import Todos from './components/Todos';
 
-const App: React.FC = () => {
+const App = (): ReactElement => {
   return (
     <div className="p-6">
       <Todos />

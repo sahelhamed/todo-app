@@ -41,7 +41,6 @@ module.exports = {
     }
   },
   "rules": {
-    "react/prop-types": 0,
     "no-unused-vars": "off",
     "no-console": "error",
     "no-use-before-define": "off",

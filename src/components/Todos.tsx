@@ -9,7 +9,7 @@ import COLUMN_TYPE_KEYS from '../constants/constants';
 // Models
 import { Column, Data } from '../models/table';
 
-const Todos: React.FC = () => {
+const Todos = (): ReactElement => {
   /**
    * A function for generate status in table
    * @param todoItem: object type of table data model
