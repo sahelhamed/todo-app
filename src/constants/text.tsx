@@ -1,5 +1,10 @@
 export const TASKS = 'Tasks';
+export const TASK = 'Task';
 export const STATUS = 'Status';
 export const DATE = 'Date';
 export const TIME = 'Time';
 export const PAUSED = 'Paused';
+export const ADD_TASK = 'Add Task';
+export const SUBMIT = 'Submit';
+export const CANCEL = 'Cancel';
+export const ADD_TODO = 'Add Todo';

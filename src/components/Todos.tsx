@@ -1,27 +1,19 @@
 // Node_modules
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 // Components
 import Table from './Table';
 import Label from './Label';
+import AddTodosForm from './AddTodosForm';
+import Modal from './Modal';
+import Button from './Button';
 // Constants
-import { DATE, STATUS, TASKS, TIME, PAUSED } from '../constants/text';
+import { DATE, STATUS, TASKS, TIME, PAUSED, ADD_TASK } from '../constants/text';
 import COLUMN_TYPE_KEYS from '../constants/constants';
 // Models
 import { Column, Data } from '../models/table';
 
 const Todos = (): ReactElement => {
-  /**
-   * A function for generate status in table
-   * @param todoItem: object type of table data model
-   * @returns ReactElement
-   */
-  const generateStatus = (todoItem: Data): ReactElement => {
-    return (
-      <Label title={todoItem.status} isActive={todoItem.status === PAUSED} />
-    );
-  };
-
-  const todos: Data[] = [
+  const initialTodos: Data[] = [
     {
       id: 1,
       task: 'Task #1',
@@ -35,6 +27,22 @@ const Todos = (): ReactElement => {
       date: 'Sat Oct 31 2020 14:52:01 GMT+0330 (Iran Standard Time)',
     },
   ];
+
+  // States
+  const [todos, setTodos] = useState(initialTodos);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [formData, setFormData] = useState({});
+
+  /**
+   * A function for generate status in table
+   * @param todoItem: object type of table data model
+   * @returns ReactElement
+   */
+  const generateStatus = (todoItem: Data): ReactElement => {
+    return (
+      <Label title={todoItem.status} isActive={todoItem.status === PAUSED} />
+    );
+  };
 
   const columns: Column[] = [
     {
@@ -64,8 +72,38 @@ const Todos = (): ReactElement => {
     },
   ];
 
+  /**
+   * A function for open modal
+   * @param isOpen: is modal should open
+   */
+  const toggleModal = (isOpen: boolean): void => {
+    setIsModalOpen(isOpen);
+  };
+
+  /**
+   * A function for add todos
+   */
+  const addTodo = (): void => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    setTodos([
+      ...todos,
+      { id: todos.length + 1, ...formData, date: new Date() },
+    ]);
+    toggleModal(false);
+  };
+
   return (
     <div>
+      <Button title={ADD_TASK} onClick={(): void => toggleModal(true)} />
+      <Modal
+        isOpen={isModalOpen}
+        title={ADD_TASK}
+        onSubmit={addTodo}
+        onClose={(): void => toggleModal(false)}
+      >
+        <AddTodosForm formData={formData} setFormData={setFormData} />
+      </Modal>
       <Table data={todos} columns={columns} />
     </div>
   );
