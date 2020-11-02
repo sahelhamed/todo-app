@@ -94,8 +94,12 @@ const Todos = (): ReactElement => {
   };
 
   return (
-    <div>
-      <Button title={ADD_TASK} onClick={(): void => toggleModal(true)} />
+    <div className="flex flex-col">
+      <Button
+        className="self-end"
+        title={ADD_TASK}
+        onClick={(): void => toggleModal(true)}
+      />
       <Modal
         isOpen={isModalOpen}
         title={ADD_TASK}
