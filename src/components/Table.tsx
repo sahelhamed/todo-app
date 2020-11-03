@@ -1,5 +1,6 @@
 // Node_modules
-import React, { ReactElement } from 'react';
+import React, { ReactElement, memo } from 'react';
+import { isEqual } from 'lodash';
 // Models
 import { Column, Data } from '../models/table';
 // Constants
@@ -72,4 +73,13 @@ const Table = ({ data, columns }: Props): ReactElement => {
   );
 };
 
-export default Table;
+const areEqual = (prevProps: Props, nextProps: Props): boolean => {
+  /*
+  return true if passing nextProps to render would return
+  the same result as passing prevProps to render,
+  otherwise return false
+  */
+  return isEqual(prevProps.data, nextProps.data);
+};
+
+export default memo(Table, areEqual);

@@ -1,5 +1,5 @@
 // Node_modules
-import React, { ReactElement } from 'react';
+import React, { ReactElement, memo } from 'react';
 
 interface Props {
   title?: string | number;
@@ -23,4 +23,4 @@ Label.defaultProps = {
   isActive: true,
 };
 
-export default Label;
+export default memo(Label);

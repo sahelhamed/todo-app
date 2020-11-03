@@ -1,5 +1,5 @@
 // Node_modules
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useCallback, useState } from 'react';
 // Components
 import Table from './Table';
 import Label from './Label';
@@ -74,11 +74,17 @@ const Todos = (): ReactElement => {
 
   /**
    * A function for open modal
-   * @param isOpen: is modal should open
    */
-  const toggleModal = (isOpen: boolean): void => {
-    setIsModalOpen(isOpen);
-  };
+  const openModal = useCallback((): void => {
+    setIsModalOpen(true);
+  }, []);
+
+  /**
+   * A function for close modal
+   */
+  const closeModal = useCallback((): void => {
+    setIsModalOpen(false);
+  }, []);
 
   /**
    * A function for add todos
@@ -90,21 +96,17 @@ const Todos = (): ReactElement => {
       ...todos,
       { id: todos.length + 1, ...formData, date: new Date() },
     ]);
-    toggleModal(false);
+    closeModal();
   };
 
   return (
     <div className="flex flex-col">
-      <Button
-        className="self-end"
-        title={ADD_TASK}
-        onClick={(): void => toggleModal(true)}
-      />
+      <Button className="self-end" title={ADD_TASK} onClick={openModal} />
       <Modal
         isOpen={isModalOpen}
         title={ADD_TASK}
         onSubmit={addTodo}
-        onClose={(): void => toggleModal(false)}
+        onClose={closeModal}
       >
         <AddTodosForm formData={formData} setFormData={setFormData} />
       </Modal>

@@ -1,5 +1,5 @@
 // Node_modules
-import React, { ReactElement } from 'react';
+import React, { ReactElement, memo } from 'react';
 
 interface Props {
   title?: string | number;
@@ -24,4 +24,4 @@ Button.defaultProps = {
   className: '',
 };
 
-export default Button;
+export default memo(Button);
