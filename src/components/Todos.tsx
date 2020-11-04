@@ -6,6 +6,7 @@ import Label from './Label';
 import AddTodosForm from './AddTodosForm';
 import Modal from './Modal';
 import Button from './Button';
+import Tab from './Tab';
 // Constants
 import {
   DATE,
@@ -208,16 +209,17 @@ const Todos = (): ReactElement => {
         className="self-end"
         title={ADD_TASK}
         onClick={openModal}
-        icon={<PlusIcon className="text-white" />}
+        icon={<PlusIcon />}
       />
       <div className="border-b">
-        <Button
-          className="bg-white mr-2"
+        <Tab
+          isActive
+          className="mr-2"
           title={TODO}
           onClick={(): void => filterTodo(false)}
         />
-        <Button
-          className="bg-white"
+        <Tab
+          isActive={false}
           title={DONE_TASKS}
           onClick={(): void => filterTodo(true)}
         />
