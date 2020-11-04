@@ -98,7 +98,7 @@ const Todos = (): ReactElement => {
       <span>
         <input
           type="checkbox"
-          value={todoItem.status === 'Done' ? 'true' : 'false'}
+          checked={todoItem.status === 'Done'}
           onClick={(): void => {
             doneTodo(todoItem);
           }}
