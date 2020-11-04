@@ -12,10 +12,12 @@ const Button = ({ title, onClick, className, icon }: Props): ReactElement => {
   return (
     <button
       type="button"
-      className={`${className} bg-blue-500 text-white border-none font-Roboto font-bold rounded-md px-5 py-3`}
+      className={`${className} ${
+        title !== '' ? 'bg-blue-500' : 'bg-transparent'
+      } text-white border-none font-Roboto font-bold rounded-md px-5 py-3`}
       onClick={onClick}
     >
-      {icon && <span className="mr-4">{icon}</span>}
+      {icon && <span className={title !== '' ? 'mr-4' : ''}>{icon}</span>}
       {title}
     </button>
   );

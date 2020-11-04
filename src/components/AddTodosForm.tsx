@@ -9,6 +9,7 @@ interface Props {
   formData: Data;
   setFormData: (data: Data) => void;
 }
+
 const AddTodosForm = ({ formData, setFormData }: Props): ReactElement => {
   /**
    * A function for open modal
@@ -26,6 +27,7 @@ const AddTodosForm = ({ formData, setFormData }: Props): ReactElement => {
         <br />
         <input
           className="p-2"
+          value={formData.task}
           onChange={(e): void => handleOnChange(e.target.value, 'task')}
         />
       </div>
@@ -34,6 +36,7 @@ const AddTodosForm = ({ formData, setFormData }: Props): ReactElement => {
         <br />
         <input
           className="p-2"
+          value={formData.status}
           onChange={(e): void => handleOnChange(e.target.value, 'status')}
         />
       </div>

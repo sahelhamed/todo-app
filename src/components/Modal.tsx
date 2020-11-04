@@ -21,7 +21,7 @@ const Modal = ({
   onClose,
 }: Props): ReactElement => {
   return isOpen ? (
-    <div className="fixed top-0 right-0 bottom-0 left-0 flex justify-center items-center bg-gray-900 opacity-75">
+    <div className="fixed top-0 right-0 bottom-0 left-0 flex justify-center items-center bg-gray-700">
       <div className="p-10 bg-white rounded-md">
         <div className="mb-5 font-bold">{title}</div>
         <div>{children}</div>

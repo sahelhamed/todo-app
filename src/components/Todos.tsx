@@ -12,7 +12,8 @@ import COLUMN_TYPE_KEYS from '../constants/constants';
 // Models
 import { Column, Data } from '../models/table';
 // Icons
-import EditIcon from '../icons/PlusIcon';
+import PlusIcon from '../icons/PlusIcon';
+import EditIcon from '../icons/EditIcon';
 
 const Todos = (): ReactElement => {
   const initialTodos: Data[] = [
@@ -46,6 +47,19 @@ const Todos = (): ReactElement => {
     );
   };
 
+  /**
+   * A function for generate status in table
+   * @param todoItem: object type of table data model
+   * @returns ReactElement
+   */
+  const generateActions = (todoItem: Data): ReactElement => {
+    return (
+      <span>
+        <Button onClick={(): void => openModal(todoItem)} icon={<EditIcon />} />
+      </span>
+    );
+  };
+
   const columns: Column[] = [
     {
       id: 0,
@@ -72,12 +86,20 @@ const Todos = (): ReactElement => {
       column: 'date',
       type: COLUMN_TYPE_KEYS.time,
     },
+    {
+      id: 4,
+      title: '',
+      column: 'task',
+      type: COLUMN_TYPE_KEYS.component,
+      component: generateActions,
+    },
   ];
 
   /**
    * A function for open modal
    */
-  const openModal = useCallback((): void => {
+  const openModal = useCallback((todoItem = {}): void => {
+    setFormData(todoItem);
     setIsModalOpen(true);
   }, []);
 
@@ -86,16 +108,25 @@ const Todos = (): ReactElement => {
    */
   const closeModal = useCallback((): void => {
     setIsModalOpen(false);
+    setFormData({});
   }, []);
 
   /**
    * A function for add todos
    */
   const addTodo = (): void => {
-    setTodos([
-      ...todos,
-      { id: todos.length + 1, ...formData, date: new Date().toString() },
-    ]);
+    if (formData.id) {
+      // Edit mode
+      setTodos(
+        todos.map((todo) => (todo.id === formData.id ? formData : todo)),
+      );
+    } else {
+      // Create mode
+      setTodos([
+        ...todos,
+        { id: todos.length + 1, ...formData, date: new Date().toString() },
+      ]);
+    }
     closeModal();
   };
 
@@ -105,7 +136,7 @@ const Todos = (): ReactElement => {
         className="self-end"
         title={ADD_TASK}
         onClick={openModal}
-        icon={<EditIcon className="text-white" />}
+        icon={<PlusIcon className="text-white" />}
       />
       <Modal
         isOpen={isModalOpen}

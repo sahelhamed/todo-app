@@ -3,9 +3,10 @@ import React, { ReactElement, memo } from 'react';
 
 interface Props {
   className?: string;
+  onclick?: () => void;
 }
 
-const PlusIcon = ({ className }: Props): ReactElement => {
+const PlusIcon = ({ className, onclick }: Props): ReactElement => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -13,6 +14,7 @@ const PlusIcon = ({ className }: Props): ReactElement => {
       height="19.779"
       viewBox="0 0 19.779 19.779"
       className={className}
+      onClick={onclick}
     >
       <g className="a">
         <path
@@ -26,6 +28,7 @@ const PlusIcon = ({ className }: Props): ReactElement => {
 
 PlusIcon.defaultProps = {
   className: '',
+  onclick: (): void => {},
 };
 
 export default memo(PlusIcon);
