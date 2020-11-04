@@ -8,7 +8,7 @@ export interface Data {
 export interface Column {
   id: number;
   title: string;
-  column?: string;
+  column: string;
   type: string;
   component?: (data: Data) => ReactElement;
 }
