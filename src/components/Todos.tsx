@@ -76,34 +76,72 @@ const Todos = (): ReactElement => {
     );
   };
 
+  /**
+   * A function for set todoItem status to Done
+   * @param todoItem: object type of table data model
+   */
+  const doneTodo = (todoItem: Data): void => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === todoItem.id ? { ...todo, status: 'Done' } : todo,
+      ),
+    );
+  };
+
+  /**
+   * A function for generate checkboxes in table
+   * @param todoItem: object type of table data model
+   * @returns ReactElement
+   */
+  const generateCheckboxes = (todoItem: Data): ReactElement => {
+    return (
+      <span>
+        <input
+          type="checkbox"
+          value={todoItem.status === 'Done' ? 'true' : 'false'}
+          onClick={(): void => {
+            doneTodo(todoItem);
+          }}
+        />
+      </span>
+    );
+  };
+
   const columns: Column[] = [
     {
       id: 0,
+      title: '',
+      column: '',
+      type: COLUMN_TYPE_KEYS.component,
+      component: generateCheckboxes,
+    },
+    {
+      id: 1,
       title: TASKS,
       column: 'task',
       type: COLUMN_TYPE_KEYS.string,
     },
     {
-      id: 1,
+      id: 2,
       title: STATUS,
       column: '',
       type: COLUMN_TYPE_KEYS.component,
       component: generateStatus,
     },
     {
-      id: 2,
+      id: 3,
       title: DATE,
       column: 'date',
       type: COLUMN_TYPE_KEYS.date,
     },
     {
-      id: 3,
+      id: 4,
       title: TIME,
       column: 'date',
       type: COLUMN_TYPE_KEYS.time,
     },
     {
-      id: 4,
+      id: 5,
       title: '',
       column: '',
       type: COLUMN_TYPE_KEYS.component,
