@@ -20,7 +20,7 @@ const AddTodosForm = ({ formData, setFormData }: Props): ReactElement => {
   };
 
   return (
-    <div className="p-2">
+    <>
       <div className="mb-2">
         <span>{TASK}:</span>
         <br />
@@ -37,7 +37,7 @@ const AddTodosForm = ({ formData, setFormData }: Props): ReactElement => {
           onChange={(e): void => handleOnChange(e.target.value, 'status')}
         />
       </div>
-    </div>
+    </>
   );
 };
 

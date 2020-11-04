@@ -7,4 +7,3 @@ export const PAUSED = 'Paused';
 export const ADD_TASK = 'Add Task';
 export const SUBMIT = 'Submit';
 export const CANCEL = 'Cancel';
-export const ADD_TODO = 'Add Todo';

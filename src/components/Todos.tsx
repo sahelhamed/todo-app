@@ -11,6 +11,8 @@ import { DATE, STATUS, TASKS, TIME, PAUSED, ADD_TASK } from '../constants/text';
 import COLUMN_TYPE_KEYS from '../constants/constants';
 // Models
 import { Column, Data } from '../models/table';
+// Icons
+import EditIcon from '../icons/PlusIcon';
 
 const Todos = (): ReactElement => {
   const initialTodos: Data[] = [
@@ -29,9 +31,9 @@ const Todos = (): ReactElement => {
   ];
 
   // States
-  const [todos, setTodos] = useState(initialTodos);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formData, setFormData] = useState({});
+  const [todos, setTodos] = useState<Data[]>(initialTodos);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [formData, setFormData] = useState<Data>({});
 
   /**
    * A function for generate status in table
@@ -90,18 +92,21 @@ const Todos = (): ReactElement => {
    * A function for add todos
    */
   const addTodo = (): void => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     setTodos([
       ...todos,
-      { id: todos.length + 1, ...formData, date: new Date() },
+      { id: todos.length + 1, ...formData, date: new Date().toString() },
     ]);
     closeModal();
   };
 
   return (
     <div className="flex flex-col">
-      <Button className="self-end" title={ADD_TASK} onClick={openModal} />
+      <Button
+        className="self-end"
+        title={ADD_TASK}
+        onClick={openModal}
+        icon={<EditIcon className="text-white" />}
+      />
       <Modal
         isOpen={isModalOpen}
         title={ADD_TASK}

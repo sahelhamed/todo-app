@@ -5,15 +5,17 @@ interface Props {
   title?: string | number;
   onClick: () => void;
   className?: string;
+  icon?: ReactElement;
 }
 
-const Button = ({ title, onClick, className }: Props): ReactElement => {
+const Button = ({ title, onClick, className, icon }: Props): ReactElement => {
   return (
     <button
       type="button"
-      className={`${className} bg-blue-500 text-white rounded-md px-5 py-4`}
+      className={`${className} bg-blue-500 text-white border-none font-Roboto font-bold rounded-md px-5 py-3`}
       onClick={onClick}
     >
+      {icon && <span className="mr-4">{icon}</span>}
       {title}
     </button>
   );
@@ -22,6 +24,7 @@ const Button = ({ title, onClick, className }: Props): ReactElement => {
 Button.defaultProps = {
   title: '',
   className: '',
+  icon: null,
 };
 
 export default memo(Button);

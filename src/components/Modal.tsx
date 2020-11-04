@@ -25,8 +25,8 @@ const Modal = ({
       <div className="p-10 bg-white rounded-md">
         <div className="mb-5 font-bold">{title}</div>
         <div>{children}</div>
-        <div className="text-center mt-5">
-          <Button className="mr-2" onClick={onSubmit} title={SUBMIT} />
+        <div className="flex flex-row justify-between mt-5">
+          <Button onClick={onSubmit} title={SUBMIT} />
           <Button onClick={onClose} title={CANCEL} />
         </div>
       </div>
