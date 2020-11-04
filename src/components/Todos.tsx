@@ -50,6 +50,7 @@ const Todos = (): ReactElement => {
   // States
   const [todos, setTodos] = useState<Data[]>(initialTodos);
   const [filteredTodos, setFilteredTodos] = useState<Data[]>(initialTodos);
+  const [isDoneList, setIsDoneList] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [formData, setFormData] = useState<Data>({});
 
@@ -190,6 +191,7 @@ const Todos = (): ReactElement => {
    */
   const filterTodo = useCallback(
     (showDonesTodo: boolean): void => {
+      setIsDoneList(showDonesTodo);
       setFilteredTodos(
         todos.filter((todo) =>
           showDonesTodo ? todo.status === 'Done' : todo.status !== 'Done',
@@ -213,13 +215,13 @@ const Todos = (): ReactElement => {
       />
       <div className="border-b">
         <Tab
-          isActive
+          isActive={!isDoneList}
           className="mr-2"
           title={TODO}
           onClick={(): void => filterTodo(false)}
         />
         <Tab
-          isActive={false}
+          isActive={isDoneList}
           title={DONE_TASKS}
           onClick={(): void => filterTodo(true)}
         />
