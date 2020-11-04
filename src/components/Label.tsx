@@ -1,5 +1,6 @@
 // Node_modules
 import React, { ReactElement, memo } from 'react';
+import cn from 'classnames';
 
 interface Props {
   title?: string | number;
@@ -9,9 +10,10 @@ interface Props {
 const Label = ({ title, isActive }: Props): ReactElement => {
   return (
     <span
-      className={`${
-        isActive ? 'bg-orange-100' : 'bg-blue-600'
-      } text-white rounded-3xl px-5 py-2 font-Roboto font-bold`}
+      className={cn(
+        isActive ? 'bg-orange-100' : 'bg-blue-600',
+        'text-white rounded-3xl px-5 py-2 font-Roboto font-bold',
+      )}
     >
       {title}
     </span>
