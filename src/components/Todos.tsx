@@ -70,7 +70,6 @@ const Todos = (): ReactElement => {
     {
       id: 1,
       title: STATUS,
-      column: 'status',
       type: COLUMN_TYPE_KEYS.component,
       component: generateStatus,
     },
@@ -89,7 +88,6 @@ const Todos = (): ReactElement => {
     {
       id: 4,
       title: '',
-      column: 'task',
       type: COLUMN_TYPE_KEYS.component,
       component: generateActions,
     },
