@@ -1,5 +1,5 @@
 // Node_modules
-import React, { ReactElement, useCallback, useState } from 'react';
+import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 // Components
 import Table from './Table';
 import Label from './Label';
@@ -7,7 +7,16 @@ import AddTodosForm from './AddTodosForm';
 import Modal from './Modal';
 import Button from './Button';
 // Constants
-import { DATE, STATUS, TASKS, TIME, PAUSED, ADD_TASK } from '../constants/text';
+import {
+  DATE,
+  STATUS,
+  TASKS,
+  TIME,
+  PAUSED,
+  ADD_TASK,
+  TODO,
+  DONE_TASKS,
+} from '../constants/text';
 import COLUMN_TYPE_KEYS from '../constants/constants';
 // Models
 import { Column, Data } from '../models/table';
@@ -25,14 +34,21 @@ const Todos = (): ReactElement => {
     },
     {
       id: 2,
-      task: 'Task #1',
+      task: 'Task #2',
       status: 'In progress',
+      date: 'Sat Oct 31 2020 14:52:01 GMT+0330 (Iran Standard Time)',
+    },
+    {
+      id: 3,
+      task: 'Task #3',
+      status: 'Done',
       date: 'Sat Oct 31 2020 14:52:01 GMT+0330 (Iran Standard Time)',
     },
   ];
 
   // States
   const [todos, setTodos] = useState<Data[]>(initialTodos);
+  const [filteredTodos, setFilteredTodos] = useState<Data[]>(initialTodos);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [formData, setFormData] = useState<Data>({});
 
@@ -130,6 +146,24 @@ const Todos = (): ReactElement => {
     closeModal();
   };
 
+  /**
+   * A function for add todos
+   */
+  const filterTodo = useCallback(
+    (showDonesTodo: boolean): void => {
+      setFilteredTodos(
+        todos.filter((todo) =>
+          showDonesTodo ? todo.status === 'Done' : todo.status !== 'Done',
+        ),
+      );
+    },
+    [todos],
+  );
+
+  useEffect(() => {
+    filterTodo(false);
+  }, [filterTodo]);
+
   return (
     <div className="flex flex-col">
       <Button
@@ -138,6 +172,18 @@ const Todos = (): ReactElement => {
         onClick={openModal}
         icon={<PlusIcon className="text-white" />}
       />
+      <div className="border-b">
+        <Button
+          className="bg-white mr-2"
+          title={TODO}
+          onClick={(): void => filterTodo(false)}
+        />
+        <Button
+          className="bg-white"
+          title={DONE_TASKS}
+          onClick={(): void => filterTodo(true)}
+        />
+      </div>
       <Modal
         isOpen={isModalOpen}
         title={ADD_TASK}
@@ -146,7 +192,7 @@ const Todos = (): ReactElement => {
       >
         <AddTodosForm formData={formData} setFormData={setFormData} />
       </Modal>
-      <Table data={todos} columns={columns} />
+      <Table data={filteredTodos} columns={columns} />
     </div>
   );
 };

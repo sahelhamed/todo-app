@@ -14,9 +14,9 @@ const Button = ({ title, onClick, className, icon }: Props): ReactElement => {
     <button
       type="button"
       className={cn(
-        className,
         title !== '' ? 'bg-blue-500' : 'bg-transparent',
         'text-white border-none font-Roboto font-bold rounded-md px-5 py-3',
+        className,
       )}
       onClick={onClick}
     >
