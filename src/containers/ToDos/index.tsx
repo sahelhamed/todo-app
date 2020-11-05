@@ -19,6 +19,9 @@ import {
   DONE_TASKS,
   IN_PROGRESS,
   DONE,
+  DAY,
+  WEEK,
+  YEAR,
 } from '../../constants/text';
 import COLUMN_TYPE_KEYS from '../../constants/constants';
 // Models
@@ -26,6 +29,7 @@ import { Column, Data } from '../../models/table';
 // Icons
 import PlusIcon from '../../icons/PlusIcon';
 import EditIcon from '../../icons/EditIcon';
+import GroupButtons, { ButtonType } from '../../components/GroupButtons';
 
 const ToDos = (): ReactElement => {
   const initialTodos: Data[] = [
@@ -222,6 +226,21 @@ const ToDos = (): ReactElement => {
     filterTodo(false);
   }, [filterTodo]);
 
+  const buttons: ButtonType[] = [
+    {
+      title: DAY,
+      onClick: (): void => {},
+    },
+    {
+      title: WEEK,
+      onClick: (): void => {},
+    },
+    {
+      title: YEAR,
+      onClick: (): void => {},
+    },
+  ];
+
   return (
     <div className="flex flex-col">
       <Button
@@ -243,6 +262,7 @@ const ToDos = (): ReactElement => {
           onClick={(): void => filterTodo(true)}
         />
       </div>
+      <GroupButtons buttons={buttons} className="self-end" />
       <Modal
         isOpen={isModalOpen}
         title={ADD_TASK}

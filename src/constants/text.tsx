@@ -11,3 +11,6 @@ export const DONE_TASKS = 'Done Tasks';
 export const DONE = 'Done';
 export const IN_PROGRESS = 'IN Progress';
 export const PAUSED = 'Paused';
+export const DAY = 'Day';
+export const WEEK = 'Week';
+export const YEAR = 'Year';
