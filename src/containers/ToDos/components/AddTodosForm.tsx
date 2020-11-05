@@ -1,9 +1,9 @@
 // Node_modules
 import React, { ReactElement } from 'react';
 // Constants
-import { STATUS, TASK } from '../constants/text';
+import { STATUS, TASK } from '../../../constants/text';
 // Models
-import { Data } from '../models/table';
+import { Data } from '../../../models/table';
 
 interface Props {
   formData: Data;

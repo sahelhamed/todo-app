@@ -1,12 +1,12 @@
 // Node_modules
 import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 // Components
-import Table from './Table';
-import Label from './Label';
-import AddTodosForm from './AddTodosForm';
-import Modal from './Modal';
-import Button from './Button';
-import Tab from './Tab';
+import Table from '../../components/Table';
+import Label from '../../components/Label';
+import Modal from '../../components/Modal';
+import Button from '../../components/Button';
+import Tab from '../../components/Tab';
+import AddTodosForm from './components/AddTodosForm';
 // Constants
 import {
   DATE,
@@ -17,32 +17,34 @@ import {
   ADD_TASK,
   TODO,
   DONE_TASKS,
-} from '../constants/text';
-import COLUMN_TYPE_KEYS from '../constants/constants';
+  IN_PROGRESS,
+  DONE,
+} from '../../constants/text';
+import COLUMN_TYPE_KEYS from '../../constants/constants';
 // Models
-import { Column, Data } from '../models/table';
+import { Column, Data } from '../../models/table';
 // Icons
-import PlusIcon from '../icons/PlusIcon';
-import EditIcon from '../icons/EditIcon';
+import PlusIcon from '../../icons/PlusIcon';
+import EditIcon from '../../icons/EditIcon';
 
-const Todos = (): ReactElement => {
+const ToDos = (): ReactElement => {
   const initialTodos: Data[] = [
     {
       id: 1,
       task: 'Task #1',
-      status: 'Paused',
+      status: PAUSED,
       date: 'Sat Oct 31 2020 14:52:01 GMT+0330 (Iran Standard Time)',
     },
     {
       id: 2,
       task: 'Task #2',
-      status: 'In progress',
+      status: IN_PROGRESS,
       date: 'Sat Oct 31 2020 14:52:01 GMT+0330 (Iran Standard Time)',
     },
     {
       id: 3,
       task: 'Task #3',
-      status: 'Done',
+      status: DONE,
       date: 'Sat Oct 31 2020 14:52:01 GMT+0330 (Iran Standard Time)',
     },
   ];
@@ -82,10 +84,25 @@ const Todos = (): ReactElement => {
    * A function for set todoItem status to Done
    * @param todoItem: object type of table data model
    */
-  const doneTodo = (todoItem: Data): void => {
+  const toggleStatus = (todoItem: Data): void => {
+    let status = '';
+    switch (todoItem.status) {
+      case DONE:
+        status = IN_PROGRESS;
+        break;
+      case IN_PROGRESS:
+        status = DONE;
+        break;
+      case PAUSED:
+        status = DONE;
+        break;
+      default:
+        status = IN_PROGRESS;
+    }
+
     setTodos(
       todos.map((todo) =>
-        todo.id === todoItem.id ? { ...todo, status: 'Done' } : todo,
+        todo.id === todoItem.id ? { ...todo, status } : todo,
       ),
     );
   };
@@ -100,9 +117,9 @@ const Todos = (): ReactElement => {
       <span>
         <input
           type="checkbox"
-          checked={todoItem.status === 'Done'}
+          checked={todoItem.status === DONE}
           onClick={(): void => {
-            doneTodo(todoItem);
+            toggleStatus(todoItem);
           }}
         />
       </span>
@@ -194,7 +211,7 @@ const Todos = (): ReactElement => {
       setIsDoneList(showDonesTodo);
       setFilteredTodos(
         todos.filter((todo) =>
-          showDonesTodo ? todo.status === 'Done' : todo.status !== 'Done',
+          showDonesTodo ? todo.status === DONE : todo.status !== DONE,
         ),
       );
     },
@@ -239,4 +256,4 @@ const Todos = (): ReactElement => {
   );
 };
 
-export default Todos;
+export default ToDos;

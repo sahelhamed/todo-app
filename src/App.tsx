@@ -1,12 +1,12 @@
 // Node_modules
 import React, { ReactElement } from 'react';
 // Components
-import Todos from './components/Todos';
+import Index from './containers/ToDos';
 
 const App = (): ReactElement => {
   return (
     <div className="p-6 font-Roboto">
-      <Todos />
+      <Index />
     </div>
   );
 };
