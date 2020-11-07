@@ -89,9 +89,10 @@ const Table = ({ data, columns }: Props): ReactElement => {
             className="py-5 border-t border-b border-gray-500 text-gray-600 font-Roboto"
           >
             <span className="flex justify-center items-center">
-              {item.title}
+              <span>{item.title}</span>
               {item.isSortable && (
                 <Button
+                  className="mt-1"
                   onClick={(): void => selectSortedField(item.column)}
                   icon={isAscending ? <DownIcon /> : <UpIcon />}
                 />
