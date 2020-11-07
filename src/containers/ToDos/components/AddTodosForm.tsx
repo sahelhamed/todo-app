@@ -1,7 +1,13 @@
 // Node_modules
 import React, { ReactElement } from 'react';
 // Constants
-import { DATE, STATUS, TASK } from '../../../constants/text';
+import {
+  DATE,
+  IN_PROGRESS,
+  PAUSED,
+  STATUS,
+  TASK,
+} from '../../../constants/text';
 // Models
 import { Data } from '../../../models/table';
 // Components
@@ -36,11 +42,16 @@ const AddTodosForm = ({ formData, setFormData }: Props): ReactElement => {
       <div className="mb-2">
         <span>{STATUS}:</span>
         <br />
-        <input
-          className="p-2"
-          value={formData.status}
+        {/* eslint-disable-next-line jsx-a11y/no-onchange */}
+        <select
+          id="status"
+          name="status"
+          className="p-2 w-full"
           onChange={(e): void => handleOnChange(e.target.value, 'status')}
-        />
+        >
+          <option value={IN_PROGRESS}>{IN_PROGRESS}</option>
+          <option value={PAUSED}>{PAUSED}</option>
+        </select>
       </div>
       <div className="mb-2">
         <span>{DATE}:</span>
