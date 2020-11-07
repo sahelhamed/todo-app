@@ -10,8 +10,6 @@ interface Props {
 }
 
 const Tab = ({ title, onClick, className, isActive }: Props): ReactElement => {
-  // eslint-disable-next-line no-console
-  console.log('tab render');
   return (
     <button
       type="button"

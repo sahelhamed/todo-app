@@ -8,8 +8,6 @@ interface Props {
 }
 
 const Label = ({ title, isActive }: Props): ReactElement => {
-  // eslint-disable-next-line no-console
-  console.log('lable render');
   return (
     <span
       className={cn(

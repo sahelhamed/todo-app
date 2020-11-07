@@ -19,8 +19,6 @@ interface Props {
 }
 
 const AddTodosForm = ({ formData, setFormData }: Props): ReactElement => {
-  // eslint-disable-next-line no-console
-  console.log('form render');
   /**
    * A function for open modal
    * @param value: field value

@@ -16,9 +16,6 @@ const DateTimePicker = ({
   handleDateChange,
   className,
 }: Props): ReactElement => {
-  // eslint-disable-next-line no-console
-  console.log(' date picker render');
-
   return (
     <DatePicker
       isClearable={isClearable}

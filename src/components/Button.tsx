@@ -11,8 +11,6 @@ interface Props {
 }
 
 const Button = ({ title, onClick, className, icon }: Props): ReactElement => {
-  // eslint-disable-next-line no-console
-  console.log(`${title}button render`);
   return (
     <button
       type="button"
