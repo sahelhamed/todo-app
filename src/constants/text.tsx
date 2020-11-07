@@ -4,6 +4,7 @@ export const STATUS = 'Status';
 export const DATE = 'Date';
 export const TIME = 'Time';
 export const ADD_TASK = 'Add Task';
+export const EDIT_TASK = 'Edit Task';
 export const SUBMIT = 'Submit';
 export const CANCEL = 'Cancel';
 export const TODO = 'To Do';

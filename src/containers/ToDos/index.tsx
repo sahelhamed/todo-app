@@ -23,6 +23,7 @@ import {
   DAY,
   WEEK,
   YEAR,
+  EDIT_TASK,
 } from '../../constants/text';
 import COLUMN_TYPE_KEYS from '../../constants/constants';
 // Models
@@ -244,7 +245,7 @@ const ToDos = (): ReactElement => {
       <GroupButtons buttons={buttons} className="self-end" />
       <Modal
         isOpen={isModalOpen}
-        title={ADD_TASK}
+        title={formData.id ? EDIT_TASK : ADD_TASK}
         onSubmit={addTodo}
         onClose={closeModal}
       >

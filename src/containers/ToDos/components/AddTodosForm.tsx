@@ -61,7 +61,7 @@ const AddTodosForm = ({ formData, setFormData }: Props): ReactElement => {
             handleOnChange(date.toString(), 'date')
           }
           selected={formData.date}
-          isClearable
+          isClearable={false}
         />
       </div>
     </>
