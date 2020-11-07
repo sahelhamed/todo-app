@@ -1,12 +1,11 @@
 // Node_modules
-import React, { ReactElement, useCallback, useEffect, useState } from 'react';
+import React, { ReactElement, useCallback, useState } from 'react';
 // Components
 import Table from '../../components/Table';
 import Label from '../../components/Label';
 import Modal from '../../components/Modal';
 import Button from '../../components/Button';
 import Tab from '../../components/Tab';
-import GroupButtons, { ButtonType } from '../../components/GroupButtons';
 import AddTodosForm from './components/AddTodosForm';
 // Constants
 import {
@@ -35,6 +34,11 @@ import EditIcon from '../../icons/EditIcon';
 import { filterDates } from '../../utils/dateTime';
 // Data
 import initialTodos from '../../data/todosList';
+
+interface ButtonType {
+  title?: string | number;
+  onClick: () => void;
+}
 
 const ToDos = (): ReactElement => {
   // States
@@ -175,7 +179,7 @@ const ToDos = (): ReactElement => {
   /**
    * A function for add todos
    */
-  const addTodo = (): void => {
+  const addTodo = useCallback((): void => {
     if (formData.id) {
       // Edit mode
       setTodos(
@@ -189,7 +193,7 @@ const ToDos = (): ReactElement => {
       ]);
     }
     closeModal();
-  };
+  }, [closeModal, formData, todos]);
 
   /**
    * A function for add todos
@@ -201,10 +205,6 @@ const ToDos = (): ReactElement => {
         : todo.status !== DONE && filterDates(todo.date, timeFilter),
     );
   }, [isDoneList, timeFilter, todos]);
-
-  useEffect(() => {
-    filterTodo();
-  }, [filterTodo]);
 
   const buttons: ButtonType[] = [
     {
@@ -234,15 +234,26 @@ const ToDos = (): ReactElement => {
           isActive={!isDoneList}
           className="mr-2"
           title={TODO}
-          onClick={(): void => setIsDoneList(false)}
+          onClick={useCallback((): void => setIsDoneList(false), [])}
         />
         <Tab
           isActive={isDoneList}
           title={DONE_TASKS}
-          onClick={(): void => setIsDoneList(true)}
+          onClick={useCallback((): void => setIsDoneList(true), [])}
         />
       </div>
-      <GroupButtons buttons={buttons} className="self-end" />
+      <div className="self-end">
+        {buttons.map((button) => (
+          <button
+            key={button.title}
+            className="bg-white font-Roboto font-bold rounded-md px-5 py-3"
+            type="button"
+            onClick={button.onClick}
+          >
+            {button.title}
+          </button>
+        ))}
+      </div>
       <Modal
         isOpen={isModalOpen}
         title={formData.id ? EDIT_TASK : ADD_TASK}

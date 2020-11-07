@@ -42,6 +42,9 @@ const Table = ({ data, columns }: Props): ReactElement => {
     }
   };
 
+  // eslint-disable-next-line no-console
+  console.log('table render');
+
   return (
     <table className="table-auto w-full">
       {/* --------------------------Table header-------------------------- */}

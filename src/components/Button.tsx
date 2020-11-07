@@ -1,6 +1,7 @@
 // Node_modules
 import React, { ReactElement, memo } from 'react';
 import cn from 'classnames';
+import { isEqual } from 'lodash';
 
 interface Props {
   title?: string | number;
@@ -10,6 +11,8 @@ interface Props {
 }
 
 const Button = ({ title, onClick, className, icon }: Props): ReactElement => {
+  // eslint-disable-next-line no-console
+  console.log(`${title}button render`);
   return (
     <button
       type="button"
@@ -33,4 +36,17 @@ Button.defaultProps = {
   icon: null,
 };
 
-export default memo(Button);
+const areEqual = (prevProps: Props, nextProps: Props): boolean => {
+  /*
+  return true if passing nextProps to render would return
+  the same result as passing prevProps to render,
+  otherwise return false
+  */
+  return (
+    isEqual(prevProps.title, nextProps.title) &&
+    isEqual(prevProps.className, nextProps.className) &&
+    isEqual(prevProps.onClick, nextProps.onClick)
+  );
+};
+
+export default memo(Button, areEqual);

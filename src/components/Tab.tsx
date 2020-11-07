@@ -9,12 +9,9 @@ interface Props {
   isActive?: boolean;
 }
 
-const Button = ({
-  title,
-  onClick,
-  className,
-  isActive,
-}: Props): ReactElement => {
+const Tab = ({ title, onClick, className, isActive }: Props): ReactElement => {
+  // eslint-disable-next-line no-console
+  console.log('tab render');
   return (
     <button
       type="button"
@@ -30,10 +27,10 @@ const Button = ({
   );
 };
 
-Button.defaultProps = {
+Tab.defaultProps = {
   title: '',
   className: '',
   isActive: false,
 };
 
-export default memo(Button);
+export default memo(Tab);

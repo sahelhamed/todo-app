@@ -19,6 +19,8 @@ interface Props {
 }
 
 const AddTodosForm = ({ formData, setFormData }: Props): ReactElement => {
+  // eslint-disable-next-line no-console
+  console.log('form render');
   /**
    * A function for open modal
    * @param value: field value
@@ -27,6 +29,9 @@ const AddTodosForm = ({ formData, setFormData }: Props): ReactElement => {
   const handleOnChange = (value: string, field: string): void => {
     setFormData({ ...formData, [field]: value });
   };
+
+  const handleDateChange = (date: Date): void =>
+    setFormData({ ...formData, date: date.toString() });
 
   return (
     <>
@@ -57,9 +62,7 @@ const AddTodosForm = ({ formData, setFormData }: Props): ReactElement => {
         <span>{DATE}:</span>
         <br />
         <DateTimePicker
-          handleDateChange={(date: Date): void =>
-            handleOnChange(date.toString(), 'date')
-          }
+          handleDateChange={handleDateChange}
           selected={formData.date}
           isClearable={false}
         />

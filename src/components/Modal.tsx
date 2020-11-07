@@ -20,6 +20,8 @@ const Modal = ({
   onSubmit,
   onClose,
 }: Props): ReactElement => {
+  // eslint-disable-next-line no-console
+  console.log('modal render');
   return isOpen ? (
     <div className="fixed top-0 right-0 bottom-0 left-0 flex justify-center items-center bg-gray-900">
       <div className="p-10 bg-white rounded-md">
