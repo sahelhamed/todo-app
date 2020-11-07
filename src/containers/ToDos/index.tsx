@@ -143,7 +143,7 @@ const ToDos = (): ReactElement => {
       title: TASKS,
       column: 'task',
       type: COLUMN_TYPE_KEYS.string,
-      isSortable: false,
+      isSortable: true,
     },
     {
       id: 2,
@@ -157,7 +157,7 @@ const ToDos = (): ReactElement => {
       title: DATE,
       column: 'date',
       type: COLUMN_TYPE_KEYS.date,
-      isSortable: false,
+      isSortable: true,
     },
     {
       id: 4,
@@ -276,7 +276,7 @@ const ToDos = (): ReactElement => {
       >
         <AddTodosForm formData={formData} setFormData={setFormData} />
       </Modal>
-      <Table data={filterTodo()} columns={columns} setData={setTodos} />
+      <Table data={filterTodo()} columns={columns} />
     </div>
   );
 };

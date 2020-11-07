@@ -1,5 +1,11 @@
 // Node_modules
-import React, { ReactElement, memo } from 'react';
+import React, {
+  ReactElement,
+  memo,
+  useState,
+  useEffect,
+  useCallback,
+} from 'react';
 import { isEqual } from 'lodash';
 // Models
 import { Column, Data } from '../models/table';
@@ -9,15 +15,19 @@ import COLUMN_TYPE_KEYS from '../constants/constants';
 import { formatDate, formatTime } from '../utils/dateTime';
 import Button from './Button';
 // Icons
+import UpIcon from '../icons/UpIcon';
 import DownIcon from '../icons/DownIcon';
 
 interface Props {
   data: Data[];
   columns: Column[];
-  setData: (data: Data[]) => void;
 }
 
-const Table = ({ data, columns, setData }: Props): ReactElement => {
+const Table = ({ data, columns }: Props): ReactElement => {
+  // States
+  const [sortedField, setSortedField] = useState<string>('');
+  const [isAscending, setIsAscending] = useState<boolean>(true);
+
   /**
    * A function for generate cell in table
    * @param item: object type of data model
@@ -47,22 +57,39 @@ const Table = ({ data, columns, setData }: Props): ReactElement => {
   };
 
   /**
-   * A function for generate status in table
-   * @param sortedField: column that should sort
+   * A selected sorted field
+   * @param field: column that should sort
    */
-  const handleSort = (sortedField: string): void => {
-    setData(
-      data.sort((itemOne: Data, itemTow: Data): number => {
-        if (itemOne[sortedField] < itemTow[sortedField]) {
-          return -1;
-        }
-        if (itemOne[sortedField] > itemTow[sortedField]) {
-          return 1;
-        }
-        return 0;
-      }),
-    );
+  const selectSortedField = (field: string): void => {
+    if (sortedField === field) {
+      setIsAscending(!isAscending);
+    } else {
+      setSortedField(field);
+    }
   };
+
+  /**
+   * A function for sort data in table
+   */
+  const handleSort = useCallback((): Data[] => {
+    return sortedField !== ''
+      ? [
+          ...data.sort((itemOne: Data, itemTow: Data): number => {
+            if (itemOne[sortedField] < itemTow[sortedField]) {
+              return isAscending ? -1 : 1;
+            }
+            if (itemOne[sortedField] > itemTow[sortedField]) {
+              return isAscending ? 1 : -1;
+            }
+            return 0;
+          }),
+        ]
+      : data;
+  }, [data, isAscending, sortedField]);
+
+  useEffect(() => {
+    handleSort();
+  }, [data, handleSort, sortedField, isAscending]);
 
   return (
     <table className="table-auto w-full">
@@ -77,8 +104,8 @@ const Table = ({ data, columns, setData }: Props): ReactElement => {
               {item.title}
               {item.isSortable && (
                 <Button
-                  onClick={(): void => handleSort(item.column)}
-                  icon={<DownIcon />}
+                  onClick={(): void => selectSortedField(item.column)}
+                  icon={isAscending ? <DownIcon /> : <UpIcon />}
                 />
               )}
             </span>
@@ -87,7 +114,7 @@ const Table = ({ data, columns, setData }: Props): ReactElement => {
       </tr>
 
       {/* --------------------------Table body-------------------------- */}
-      {data.map((item: Data) => (
+      {handleSort().map((item: Data) => (
         <tr key={item.id}>
           {columns.map((columnItem: Column) => (
             <td
