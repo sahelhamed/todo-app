@@ -7,13 +7,17 @@ import { Column, Data } from '../models/table';
 import COLUMN_TYPE_KEYS from '../constants/constants';
 // Utils
 import { formatDate, formatTime } from '../utils/dateTime';
+import Button from './Button';
+// Icons
+import DownIcon from '../icons/DownIcon';
 
 interface Props {
   data: Data[];
   columns: Column[];
+  setData: (data: Data[]) => void;
 }
 
-const Table = ({ data, columns }: Props): ReactElement => {
+const Table = ({ data, columns, setData }: Props): ReactElement => {
   /**
    * A function for generate cell in table
    * @param item: object type of data model
@@ -42,6 +46,24 @@ const Table = ({ data, columns }: Props): ReactElement => {
     }
   };
 
+  /**
+   * A function for generate status in table
+   * @param sortedField: column that should sort
+   */
+  const handleSort = (sortedField: string): void => {
+    setData(
+      data.sort((itemOne: Data, itemTow: Data): number => {
+        if (itemOne[sortedField] < itemTow[sortedField]) {
+          return -1;
+        }
+        if (itemOne[sortedField] > itemTow[sortedField]) {
+          return 1;
+        }
+        return 0;
+      }),
+    );
+  };
+
   return (
     <table className="table-auto w-full">
       {/* --------------------------Table header-------------------------- */}
@@ -51,7 +73,15 @@ const Table = ({ data, columns }: Props): ReactElement => {
             key={item.id}
             className="py-5 border-t border-b border-gray-500 text-gray-600 font-Roboto"
           >
-            {item.title}
+            <span className="flex justify-center items-center">
+              {item.title}
+              {item.isSortable && (
+                <Button
+                  onClick={(): void => handleSort(item.column)}
+                  icon={<DownIcon />}
+                />
+              )}
+            </span>
           </th>
         ))}
       </tr>

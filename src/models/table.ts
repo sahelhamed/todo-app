@@ -10,5 +10,6 @@ export interface Column {
   title: string;
   column: string;
   type: string;
+  isSortable?: boolean;
   component?: (data: Data) => ReactElement;
 }

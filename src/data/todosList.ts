@@ -34,6 +34,12 @@ const initialTodos: Data[] = [
     status: IN_PROGRESS,
     date: 'Sat Aug 1 2020 14:52:01 GMT+0330 (Iran Standard Time)',
   },
+  {
+    id: 6,
+    task: 'First Task',
+    status: IN_PROGRESS,
+    date: 'Sat Oct 30 2020 14:52:01 GMT+0330 (Iran Standard Time)',
+  },
 ];
 
 export default initialTodos;
