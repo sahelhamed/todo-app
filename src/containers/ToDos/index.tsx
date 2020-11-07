@@ -6,6 +6,7 @@ import Label from '../../components/Label';
 import Modal from '../../components/Modal';
 import Button from '../../components/Button';
 import Tab from '../../components/Tab';
+import GroupButtons, { ButtonType } from '../../components/GroupButtons';
 import AddTodosForm from './components/AddTodosForm';
 // Constants
 import {
@@ -29,34 +30,17 @@ import { Column, Data } from '../../models/table';
 // Icons
 import PlusIcon from '../../icons/PlusIcon';
 import EditIcon from '../../icons/EditIcon';
-import GroupButtons, { ButtonType } from '../../components/GroupButtons';
+// Utils
+import { filterDates } from '../../utils/dateTime';
+// Data
+import initialTodos from '../../data/todosList';
 
 const ToDos = (): ReactElement => {
-  const initialTodos: Data[] = [
-    {
-      id: 1,
-      task: 'Task #1',
-      status: PAUSED,
-      date: 'Sat Oct 31 2020 14:52:01 GMT+0330 (Iran Standard Time)',
-    },
-    {
-      id: 2,
-      task: 'Task #2',
-      status: IN_PROGRESS,
-      date: 'Sat Oct 31 2020 14:52:01 GMT+0330 (Iran Standard Time)',
-    },
-    {
-      id: 3,
-      task: 'Task #3',
-      status: DONE,
-      date: 'Sat Oct 31 2020 14:52:01 GMT+0330 (Iran Standard Time)',
-    },
-  ];
-
   // States
   const [todos, setTodos] = useState<Data[]>(initialTodos);
   const [filteredTodos, setFilteredTodos] = useState<Data[]>(initialTodos);
   const [isDoneList, setIsDoneList] = useState<boolean>(false);
+  const [timeFilter, setTimeFilter] = useState<string>(WEEK);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [formData, setFormData] = useState<Data>({});
 
@@ -215,11 +199,13 @@ const ToDos = (): ReactElement => {
       setIsDoneList(showDonesTodo);
       setFilteredTodos(
         todos.filter((todo) =>
-          showDonesTodo ? todo.status === DONE : todo.status !== DONE,
+          showDonesTodo
+            ? todo.status === DONE && filterDates(todo.date, timeFilter)
+            : todo.status !== DONE && filterDates(todo.date, timeFilter),
         ),
       );
     },
-    [todos],
+    [timeFilter, todos],
   );
 
   useEffect(() => {
@@ -229,15 +215,15 @@ const ToDos = (): ReactElement => {
   const buttons: ButtonType[] = [
     {
       title: DAY,
-      onClick: (): void => {},
+      onClick: (): void => setTimeFilter(DAY),
     },
     {
       title: WEEK,
-      onClick: (): void => {},
+      onClick: (): void => setTimeFilter(WEEK),
     },
     {
       title: YEAR,
-      onClick: (): void => {},
+      onClick: (): void => setTimeFilter(YEAR),
     },
   ];
 

@@ -15,7 +15,12 @@ const GroupButtons = ({ buttons, className }: Props): ReactElement => {
   return (
     <div className={className}>
       {buttons.map((button) => (
-        <button key={button.title} type="button" onClick={button.onClick}>
+        <button
+          key={button.title}
+          className="bg-white font-Roboto font-bold rounded-md px-5 py-3"
+          type="button"
+          onClick={button.onClick}
+        >
           {button.title}
         </button>
       ))}
