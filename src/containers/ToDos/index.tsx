@@ -60,14 +60,26 @@ const ToDos = (): ReactElement => {
   };
 
   /**
+   * A function for delete todoItem
+   * @param todoItem: object type of table data model
+   */
+  const deleteTodo = (todoItem: Data): void => {
+    setTodos(todos.filter((todo) => todo.id !== todoItem.id));
+  };
+
+  /**
    * A function for generate status in table
    * @param todoItem: object type of table data model
    * @returns ReactElement
    */
   const generateActions = (todoItem: Data): ReactElement => {
     return (
-      <span>
+      <span className="flex">
         <Button onClick={(): void => openModal(todoItem)} icon={<EditIcon />} />
+        <Button
+          onClick={(): void => deleteTodo(todoItem)}
+          icon={<EditIcon />}
+        />
       </span>
     );
   };
