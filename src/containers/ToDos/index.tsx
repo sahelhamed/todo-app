@@ -38,7 +38,6 @@ import initialTodos from '../../data/todosList';
 const ToDos = (): ReactElement => {
   // States
   const [todos, setTodos] = useState<Data[]>(initialTodos);
-  const [filteredTodos, setFilteredTodos] = useState<Data[]>(initialTodos);
   const [isDoneList, setIsDoneList] = useState<boolean>(false);
   const [timeFilter, setTimeFilter] = useState<string>(WEEK);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -194,22 +193,16 @@ const ToDos = (): ReactElement => {
   /**
    * A function for add todos
    */
-  const filterTodo = useCallback(
-    (showDonesTodo: boolean): void => {
-      setIsDoneList(showDonesTodo);
-      setFilteredTodos(
-        todos.filter((todo) =>
-          showDonesTodo
-            ? todo.status === DONE && filterDates(todo.date, timeFilter)
-            : todo.status !== DONE && filterDates(todo.date, timeFilter),
-        ),
-      );
-    },
-    [timeFilter, todos],
-  );
+  const filterTodo = useCallback((): Data[] => {
+    return todos.filter((todo) =>
+      isDoneList
+        ? todo.status === DONE && filterDates(todo.date, timeFilter)
+        : todo.status !== DONE && filterDates(todo.date, timeFilter),
+    );
+  }, [isDoneList, timeFilter, todos]);
 
   useEffect(() => {
-    filterTodo(false);
+    filterTodo();
   }, [filterTodo]);
 
   const buttons: ButtonType[] = [
@@ -240,12 +233,12 @@ const ToDos = (): ReactElement => {
           isActive={!isDoneList}
           className="mr-2"
           title={TODO}
-          onClick={(): void => filterTodo(false)}
+          onClick={(): void => setIsDoneList(false)}
         />
         <Tab
           isActive={isDoneList}
           title={DONE_TASKS}
-          onClick={(): void => filterTodo(true)}
+          onClick={(): void => setIsDoneList(true)}
         />
       </div>
       <GroupButtons buttons={buttons} className="self-end" />
@@ -257,7 +250,7 @@ const ToDos = (): ReactElement => {
       >
         <AddTodosForm formData={formData} setFormData={setFormData} />
       </Modal>
-      <Table data={filteredTodos} columns={columns} />
+      <Table data={filterTodo()} columns={columns} />
     </div>
   );
 };
