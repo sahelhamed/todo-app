@@ -1,9 +1,11 @@
 // Node_modules
 import React, { ReactElement } from 'react';
 // Constants
-import { STATUS, TASK } from '../../../constants/text';
+import { DATE, STATUS, TASK } from '../../../constants/text';
 // Models
 import { Data } from '../../../models/table';
+// Components
+import DateTimePicker from '../../../components/DateTimePicker';
 
 interface Props {
   formData: Data;
@@ -38,6 +40,17 @@ const AddTodosForm = ({ formData, setFormData }: Props): ReactElement => {
           className="p-2"
           value={formData.status}
           onChange={(e): void => handleOnChange(e.target.value, 'status')}
+        />
+      </div>
+      <div className="mb-2">
+        <span>{DATE}:</span>
+        <br />
+        <DateTimePicker
+          handleDateChange={(date: Date): void =>
+            handleOnChange(date.toString(), 'date')
+          }
+          selected={formData.date}
+          isClearable
         />
       </div>
     </>
