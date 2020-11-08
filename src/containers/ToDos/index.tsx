@@ -31,6 +31,7 @@ import { Column, Data } from '../../models/table';
 // Icons
 import PlusIcon from '../../icons/PlusIcon';
 import EditIcon from '../../icons/EditIcon';
+import DeleteIcon from '../../icons/DeleteIcon';
 // Utils
 import { filterDates } from '../../utils/dateTime';
 // Data
@@ -102,7 +103,7 @@ const ToDos = (): ReactElement => {
           />
           <Button
             onClick={(): void => deleteTodo(todoItem)}
-            icon={<EditIcon />}
+            icon={<DeleteIcon />}
           />
         </span>
       );
