@@ -5,7 +5,7 @@ import Index from './containers/ToDos';
 
 const App = (): ReactElement => {
   return (
-    <div className="p-6 font-Roboto">
+    <div className="pl-20 p-12 font-Roboto">
       <Index />
     </div>
   );

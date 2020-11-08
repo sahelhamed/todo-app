@@ -35,7 +35,7 @@ const AddTodosForm = ({ formData, setFormData }: Props): ReactElement => {
   return (
     <>
       <div className="mb-2">
-        <span>{TASK}:</span>
+        <span className="font-medium font-Roboto font-base">{TASK}:</span>
         <br />
         <input
           className="p-2"
@@ -44,7 +44,7 @@ const AddTodosForm = ({ formData, setFormData }: Props): ReactElement => {
         />
       </div>
       <div className="mb-2">
-        <span>{STATUS}:</span>
+        <span className="font-medium font-Roboto font-base">{STATUS}:</span>
         <br />
         {/* eslint-disable-next-line jsx-a11y/no-onchange */}
         <select
@@ -59,7 +59,7 @@ const AddTodosForm = ({ formData, setFormData }: Props): ReactElement => {
         </select>
       </div>
       <div className="mb-2">
-        <span>{DATE}:</span>
+        <span className="font-medium font-Roboto font-base">{DATE}:</span>
         <br />
         <DateTimePicker
           handleDateChange={handleDateChange}
