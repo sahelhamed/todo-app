@@ -151,6 +151,7 @@ const ToDos = (): ReactElement => {
       return (
         <span>
           <input
+            className="transform scale-150"
             type="checkbox"
             checked={todoItem.status === DONE}
             onClick={(): void => {
@@ -242,28 +243,28 @@ const ToDos = (): ReactElement => {
 
   const buttons: ButtonType[] = [
     {
-      title: DAY,
-      onClick: (): void => setTimeFilter(DAY),
+      title: MONTH,
+      onClick: (): void => setTimeFilter(MONTH),
     },
     {
       title: WEEK,
       onClick: (): void => setTimeFilter(WEEK),
     },
     {
-      title: MONTH,
-      onClick: (): void => setTimeFilter(MONTH),
+      title: DAY,
+      onClick: (): void => setTimeFilter(DAY),
     },
   ];
 
   return (
     <div className="flex flex-col">
       <Button
-        className="self-end"
+        className="self-end button-shadow"
         title={ADD_TASK}
         onClick={openModal}
         icon={<PlusIcon />}
       />
-      <div className="border-b">
+      <div className="border-solid border-r-0 border-l-0 border-t-0 border-b border-gray-300">
         <Tab
           isActive={!isDoneList}
           className="mr-2"
@@ -276,20 +277,24 @@ const ToDos = (): ReactElement => {
           onClick={useCallback((): void => setIsDoneList(true), [])}
         />
       </div>
-      <div className="self-end">
-        {buttons.map((button) => (
-          <button
-            key={button.title}
-            className={cn(
-              'bg-white font-Roboto font-bold rounded-md px-5 py-3 border-gray-300 outline-none',
-              button.title === timeFilter ? 'text-blue-500' : 'text-gray-600',
-            )}
-            type="button"
-            onClick={button.onClick}
-          >
-            {button.title}
-          </button>
-        ))}
+      <div className="pt-10 pb-12 text-right">
+        <span className="custom-shadow inline-block">
+          {buttons.map((button, index) => (
+            <button
+              key={button.title}
+              className={cn(
+                'bg-white border-solid font-Roboto font-bold text-sm w-20 py-3 border-gray-300 outline-none',
+                button.title === timeFilter ? 'text-blue-500' : 'text-gray-600',
+                index === 0 && 'rounded-l-md border-r-0',
+                index === buttons.length - 1 && 'rounded-r-md border-l-0',
+              )}
+              type="button"
+              onClick={button.onClick}
+            >
+              {button.title}
+            </button>
+          ))}
+        </span>
       </div>
       <Modal
         isOpen={isModalOpen}

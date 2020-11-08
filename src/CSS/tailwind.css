@@ -5,4 +5,12 @@
     font-weight: 400;
 }
 
+.custom-shadow {
+    box-shadow: 0 2px 3px #0000000D;
+}
+
+.button-shadow {
+    box-shadow: 0 3px 26px #0000001C
+}
+
 @tailwind utilities;

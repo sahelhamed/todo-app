@@ -12,7 +12,7 @@ const Label = ({ title, isActive }: Props): ReactElement => {
     <span
       className={cn(
         isActive ? 'bg-orange-100' : 'bg-blue-600',
-        'text-white rounded-3xl px-5 py-2 font-Roboto font-bold',
+        'text-white rounded-3xl px-5 py-2 font-Roboto font-bold text-lg',
       )}
     >
       {title}

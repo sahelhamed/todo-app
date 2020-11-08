@@ -14,8 +14,10 @@ const Tab = ({ title, onClick, className, isActive }: Props): ReactElement => {
     <button
       type="button"
       className={cn(
-        isActive ? 'bg-white text-blue-500' : 'bg-gray-100 text-gray-400',
-        'text-white border border-gray-100 font-Roboto font-bold rounded-md px-5 py-3 outline-none',
+        isActive
+          ? 'bg-white text-blue-500 border-b-0'
+          : 'customGray-100 text-gray-500',
+        'text-sm ext-white border-solid border border-gray-300 font-Roboto font-bold rounded-t-md w-32 py-3 outline-none',
         className,
       )}
       onClick={onClick}
