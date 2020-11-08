@@ -18,7 +18,7 @@ const PlusIcon = ({ className, onclick }: Props): ReactElement => {
     >
       <g className="a">
         <path
-          style={{ opacity: 0.7, fill: '#fff' }}
+          fill="rgba(255, 255, 255, 0.7)"
           d="M18.131,8.241H11.538V1.648a1.648,1.648,0,1,0-3.3,0V8.241H1.648a1.648,1.648,0,1,0,0,3.3H8.241v6.593a1.648,1.648,0,1,0,3.3,0V11.538h6.593a1.648,1.648,0,1,0,0-3.3Z"
         />
       </g>

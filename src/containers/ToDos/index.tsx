@@ -1,5 +1,6 @@
 // Node_modules
 import React, { ReactElement, useCallback, useState } from 'react';
+import cn from 'classnames';
 // Components
 import Table from '../../components/Table';
 import Label from '../../components/Label';
@@ -21,7 +22,7 @@ import {
   DONE,
   DAY,
   WEEK,
-  YEAR,
+  MONTH,
   EDIT_TASK,
 } from '../../constants/text';
 import COLUMN_TYPE_KEYS from '../../constants/constants';
@@ -44,91 +45,157 @@ const ToDos = (): ReactElement => {
   // States
   const [todos, setTodos] = useState<Data[]>(initialTodos);
   const [isDoneList, setIsDoneList] = useState<boolean>(false);
-  const [timeFilter, setTimeFilter] = useState<string>(WEEK);
+  const [timeFilter, setTimeFilter] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [formData, setFormData] = useState<Data>({});
+
+  /**
+   * A function for open modal
+   */
+  const openModal = useCallback((todoItem = {}): void => {
+    setFormData(todoItem);
+    setIsModalOpen(true);
+  }, []);
+
+  /**
+   * A function for close modal
+   */
+  const closeModal = useCallback((): void => {
+    setIsModalOpen(false);
+    setFormData({});
+  }, []);
 
   /**
    * A function for generate status in table
    * @param todoItem: object type of table data model
    * @returns ReactElement
    */
-  const generateStatus = (todoItem: Data): ReactElement => {
+  const generateStatus = useCallback((todoItem: Data): ReactElement => {
     return (
       <Label title={todoItem.status} isActive={todoItem.status === PAUSED} />
     );
-  };
+  }, []);
 
   /**
    * A function for delete todoItem
    * @param todoItem: object type of table data model
    */
-  const deleteTodo = (todoItem: Data): void => {
-    setTodos(todos.filter((todo) => todo.id !== todoItem.id));
-  };
+  const deleteTodo = useCallback(
+    (todoItem: Data): void => {
+      setTodos(todos.filter((todo) => todo.id !== todoItem.id));
+    },
+    [todos],
+  );
 
   /**
-   * A function for generate status in table
+   * A function for generate actions button in table
    * @param todoItem: object type of table data model
    * @returns ReactElement
    */
-  const generateActions = (todoItem: Data): ReactElement => {
-    return (
-      <span className="flex">
-        <Button onClick={(): void => openModal(todoItem)} icon={<EditIcon />} />
-        <Button
-          onClick={(): void => deleteTodo(todoItem)}
-          icon={<EditIcon />}
-        />
-      </span>
-    );
-  };
+  const generateActions = useCallback(
+    (todoItem: Data): ReactElement => {
+      return (
+        <span className="flex">
+          <Button
+            onClick={(): void => openModal(todoItem)}
+            icon={<EditIcon />}
+          />
+          <Button
+            onClick={(): void => deleteTodo(todoItem)}
+            icon={<EditIcon />}
+          />
+        </span>
+      );
+    },
+    [deleteTodo, openModal],
+  );
 
   /**
    * A function for set todoItem status to Done
    * @param todoItem: object type of table data model
    */
-  const toggleStatus = (todoItem: Data): void => {
-    let status = '';
-    switch (todoItem.status) {
-      case DONE:
-        status = IN_PROGRESS;
-        break;
-      case IN_PROGRESS:
-        status = DONE;
-        break;
-      case PAUSED:
-        status = DONE;
-        break;
-      default:
-        status = IN_PROGRESS;
-    }
+  const toggleStatus = useCallback(
+    (todoItem: Data): void => {
+      let status = '';
+      switch (todoItem.status) {
+        case DONE:
+          status = IN_PROGRESS;
+          break;
+        case IN_PROGRESS:
+          status = DONE;
+          break;
+        case PAUSED:
+          status = DONE;
+          break;
+        default:
+          status = IN_PROGRESS;
+      }
 
-    setTodos(
-      todos.map((todo) =>
-        todo.id === todoItem.id ? { ...todo, status } : todo,
-      ),
-    );
-  };
+      setTodos(
+        todos.map((todo) =>
+          todo.id === todoItem.id ? { ...todo, status } : todo,
+        ),
+      );
+    },
+    [todos],
+  );
 
   /**
    * A function for generate checkboxes in table
    * @param todoItem: object type of table data model
    * @returns ReactElement
    */
-  const generateCheckboxes = (todoItem: Data): ReactElement => {
-    return (
-      <span>
-        <input
-          type="checkbox"
-          checked={todoItem.status === DONE}
-          onClick={(): void => {
-            toggleStatus(todoItem);
-          }}
-        />
-      </span>
+  const generateCheckboxes = useCallback(
+    (todoItem: Data): ReactElement => {
+      return (
+        <span>
+          <input
+            type="checkbox"
+            checked={todoItem.status === DONE}
+            onClick={(): void => {
+              toggleStatus(todoItem);
+            }}
+          />
+        </span>
+      );
+    },
+    [toggleStatus],
+  );
+
+  /**
+   * A function for add todos
+   */
+  const addTodo = useCallback((): void => {
+    if (formData.id) {
+      // Edit mode
+      setTodos(
+        todos.map((todo) => (todo.id === formData.id ? formData : todo)),
+      );
+    } else {
+      // Create mode
+      setTodos([
+        ...todos,
+        {
+          id: todos.length + 1,
+          ...formData,
+          status: formData.status || IN_PROGRESS,
+          date: formData.date || new Date().toString(),
+        },
+      ]);
+    }
+    closeModal();
+  }, [closeModal, formData, todos]);
+
+  /**
+   * A function for add todos
+   */
+  const filterTodo = useCallback((): Data[] => {
+    return todos.filter((todo) =>
+      isDoneList
+        ? todo.status === DONE && filterDates(todo.date, timeFilter)
+        : todo.status !== DONE && filterDates(todo.date, timeFilter),
     );
-  };
+  }, [isDoneList, timeFilter, todos]);
 
   const columns: Column[] = [
     {
@@ -174,52 +241,6 @@ const ToDos = (): ReactElement => {
     },
   ];
 
-  /**
-   * A function for open modal
-   */
-  const openModal = useCallback((todoItem = {}): void => {
-    setFormData(todoItem);
-    setIsModalOpen(true);
-  }, []);
-
-  /**
-   * A function for close modal
-   */
-  const closeModal = useCallback((): void => {
-    setIsModalOpen(false);
-    setFormData({});
-  }, []);
-
-  /**
-   * A function for add todos
-   */
-  const addTodo = useCallback((): void => {
-    if (formData.id) {
-      // Edit mode
-      setTodos(
-        todos.map((todo) => (todo.id === formData.id ? formData : todo)),
-      );
-    } else {
-      // Create mode
-      setTodos([
-        ...todos,
-        { id: todos.length + 1, ...formData, date: new Date().toString() },
-      ]);
-    }
-    closeModal();
-  }, [closeModal, formData, todos]);
-
-  /**
-   * A function for add todos
-   */
-  const filterTodo = useCallback((): Data[] => {
-    return todos.filter((todo) =>
-      isDoneList
-        ? todo.status === DONE && filterDates(todo.date, timeFilter)
-        : todo.status !== DONE && filterDates(todo.date, timeFilter),
-    );
-  }, [isDoneList, timeFilter, todos]);
-
   const buttons: ButtonType[] = [
     {
       title: DAY,
@@ -230,8 +251,8 @@ const ToDos = (): ReactElement => {
       onClick: (): void => setTimeFilter(WEEK),
     },
     {
-      title: YEAR,
-      onClick: (): void => setTimeFilter(YEAR),
+      title: MONTH,
+      onClick: (): void => setTimeFilter(MONTH),
     },
   ];
 
@@ -260,7 +281,10 @@ const ToDos = (): ReactElement => {
         {buttons.map((button) => (
           <button
             key={button.title}
-            className="bg-white font-Roboto font-bold rounded-md px-5 py-3"
+            className={cn(
+              'bg-white font-Roboto font-bold rounded-md px-5 py-3 border-gray-300 outline-none',
+              button.title === timeFilter ? 'text-blue-500' : 'text-gray-600',
+            )}
             type="button"
             onClick={button.onClick}
           >
