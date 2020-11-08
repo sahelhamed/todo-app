@@ -14,7 +14,7 @@ const UpIcon = ({ className }: Props): ReactElement => {
       width="24"
       className={className}
     >
-      <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" />
+      <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" fill="#4a5568" />
       <path d="M0 0h24v24H0z" fill="none" />
     </svg>
   );
