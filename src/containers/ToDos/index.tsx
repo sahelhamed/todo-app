@@ -181,6 +181,8 @@ const ToDos = (): ReactElement => {
    * A function for add todos
    */
   const addTodo = useCallback((): void => {
+    // eslint-disable-next-line no-console
+    console.log(formData);
     if (formData.id) {
       // Edit mode
       setTodos(
