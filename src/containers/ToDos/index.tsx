@@ -80,9 +80,12 @@ const ToDos = (): ReactElement => {
    * A function for delete todoItem
    * @param todoItem: object type of table data model
    */
-  const deleteTodo = (todoItem: Data): void => {
-    setTodos(todos.filter((todo) => todo.id !== todoItem.id));
-  };
+  const deleteTodo = useCallback(
+    (todoItem: Data): void => {
+      setTodos(todos.filter((todo) => todo.id !== todoItem.id));
+    },
+    [todos],
+  );
 
   /**
    * A function for generate actions button in table
@@ -97,14 +100,14 @@ const ToDos = (): ReactElement => {
             onClick={(): void => openModal(todoItem)}
             icon={<EditIcon />}
           />
-                  <Button
-                      onClick={(): void => deleteTodo(todoItem)}
-                      icon={<EditIcon />}
-                  />
+          <Button
+            onClick={(): void => deleteTodo(todoItem)}
+            icon={<EditIcon />}
+          />
         </span>
       );
     },
-    [openModal],
+    [deleteTodo, openModal],
   );
 
   /**
