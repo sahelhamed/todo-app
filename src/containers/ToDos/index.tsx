@@ -50,74 +50,137 @@ const ToDos = (): ReactElement => {
   const [formData, setFormData] = useState<Data>({});
 
   /**
-   * A function for generate status in table
-   * @param todoItem: object type of table data model
-   * @returns ReactElement
+   * A function for open modal
    */
-  const generateStatus = (todoItem: Data): ReactElement => {
-    return (
-      <Label title={todoItem.status} isActive={todoItem.status === PAUSED} />
-    );
-  };
+  const openModal = useCallback((todoItem = {}): void => {
+    setFormData(todoItem);
+    setIsModalOpen(true);
+  }, []);
+
+  /**
+   * A function for close modal
+   */
+  const closeModal = useCallback((): void => {
+    setIsModalOpen(false);
+    setFormData({});
+  }, []);
 
   /**
    * A function for generate status in table
    * @param todoItem: object type of table data model
    * @returns ReactElement
    */
-  const generateActions = (todoItem: Data): ReactElement => {
+  const generateStatus = useCallback((todoItem: Data): ReactElement => {
     return (
-      <span>
-        <Button onClick={(): void => openModal(todoItem)} icon={<EditIcon />} />
-      </span>
+      <Label title={todoItem.status} isActive={todoItem.status === PAUSED} />
     );
-  };
+  }, []);
+
+  /**
+   * A function for generate actions button in table
+   * @param todoItem: object type of table data model
+   * @returns ReactElement
+   */
+  const generateActions = useCallback(
+    (todoItem: Data): ReactElement => {
+      return (
+        <span>
+          <Button
+            onClick={(): void => openModal(todoItem)}
+            icon={<EditIcon />}
+          />
+        </span>
+      );
+    },
+    [openModal],
+  );
 
   /**
    * A function for set todoItem status to Done
    * @param todoItem: object type of table data model
    */
-  const toggleStatus = (todoItem: Data): void => {
-    let status = '';
-    switch (todoItem.status) {
-      case DONE:
-        status = IN_PROGRESS;
-        break;
-      case IN_PROGRESS:
-        status = DONE;
-        break;
-      case PAUSED:
-        status = DONE;
-        break;
-      default:
-        status = IN_PROGRESS;
-    }
+  const toggleStatus = useCallback(
+    (todoItem: Data): void => {
+      let status = '';
+      switch (todoItem.status) {
+        case DONE:
+          status = IN_PROGRESS;
+          break;
+        case IN_PROGRESS:
+          status = DONE;
+          break;
+        case PAUSED:
+          status = DONE;
+          break;
+        default:
+          status = IN_PROGRESS;
+      }
 
-    setTodos(
-      todos.map((todo) =>
-        todo.id === todoItem.id ? { ...todo, status } : todo,
-      ),
-    );
-  };
+      setTodos(
+        todos.map((todo) =>
+          todo.id === todoItem.id ? { ...todo, status } : todo,
+        ),
+      );
+    },
+    [todos],
+  );
 
   /**
    * A function for generate checkboxes in table
    * @param todoItem: object type of table data model
    * @returns ReactElement
    */
-  const generateCheckboxes = (todoItem: Data): ReactElement => {
-    return (
-      <span>
-        <input
-          type="checkbox"
-          checked={todoItem.status === DONE}
-          onClick={(): void => {
-            toggleStatus(todoItem);
-          }}
-        />
-      </span>
+  const generateCheckboxes = useCallback(
+    (todoItem: Data): ReactElement => {
+      return (
+        <span>
+          <input
+            type="checkbox"
+            checked={todoItem.status === DONE}
+            onClick={(): void => {
+              toggleStatus(todoItem);
+            }}
+          />
+        </span>
+      );
+    },
+    [toggleStatus],
+  );
+
+  /**
+   * A function for add todos
+   */
+  const addTodo = useCallback((): void => {
+    if (formData.id) {
+      // Edit mode
+      setTodos(
+        todos.map((todo) => (todo.id === formData.id ? formData : todo)),
+      );
+    } else {
+      // Create mode
+      setTodos([
+        ...todos,
+        {
+          id: todos.length + 1,
+          ...formData,
+          status: formData.status || IN_PROGRESS,
+          date: formData.date || new Date().toString(),
+        },
+      ]);
+    }
+    closeModal();
+  }, [closeModal, formData, todos]);
+
+  /**
+   * A function for add todos
+   */
+  const filterTodo = useCallback((): Data[] => {
+    return todos.filter((todo) =>
+      isDoneList
+        ? todo.status === DONE && filterDates(todo.date, timeFilter)
+        : todo.status !== DONE && filterDates(todo.date, timeFilter),
     );
-  };
+  }, [isDoneList, timeFilter, todos]);
 
   const columns: Column[] = [
     {
@@ -160,59 +223,6 @@ const ToDos = (): ReactElement => {
       component: generateActions,
     },
   ];
-
-  /**
-   * A function for open modal
-   */
-  const openModal = useCallback((todoItem = {}): void => {
-    setFormData(todoItem);
-    setIsModalOpen(true);
-  }, []);
-
-  /**
-   * A function for close modal
-   */
-  const closeModal = useCallback((): void => {
-    setIsModalOpen(false);
-    setFormData({});
-  }, []);
-
-  /**
-   * A function for add todos
-   */
-  const addTodo = useCallback((): void => {
-    // eslint-disable-next-line no-console
-    console.log(formData);
-    if (formData.id) {
-      // Edit mode
-      setTodos(
-        todos.map((todo) => (todo.id === formData.id ? formData : todo)),
-      );
-    } else {
-      // Create mode
-      setTodos([
-        ...todos,
-        {
-          id: todos.length + 1,
-          ...formData,
-          status: formData.status || IN_PROGRESS,
-          date: formData.date || new Date().toString(),
-        },
-      ]);
-    }
-    closeModal();
-  }, [closeModal, formData, todos]);
-
-  /**
-   * A function for add todos
-   */
-  const filterTodo = useCallback((): Data[] => {
-    return todos.filter((todo) =>
-      isDoneList
-        ? todo.status === DONE && filterDates(todo.date, timeFilter)
-        : todo.status !== DONE && filterDates(todo.date, timeFilter),
-    );
-  }, [isDoneList, timeFilter, todos]);
 
   const buttons: ButtonType[] = [
     {

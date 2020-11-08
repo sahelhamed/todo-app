@@ -79,7 +79,7 @@ const areEqual = (prevProps: Props, nextProps: Props): boolean => {
   the same result as passing prevProps to render,
   otherwise return false
   */
-  return isEqual(prevProps.data, nextProps.data);
+  return isEqual(prevProps, nextProps);
 };
 
 export default memo(Table, areEqual);
