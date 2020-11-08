@@ -247,7 +247,7 @@ const ToDos = (): ReactElement => {
         onClick={openModal}
         icon={<PlusIcon />}
       />
-      <div className="border-b">
+      <div className="border-solid border-r-0 border-l-0 border-t-0 border-b border-gray-300">
         <Tab
           isActive={!isDoneList}
           className="mr-2"
@@ -260,7 +260,7 @@ const ToDos = (): ReactElement => {
           onClick={useCallback((): void => setIsDoneList(true), [])}
         />
       </div>
-      <div className="self-end">
+      <div className="py-12 w-full text-right">
         {buttons.map((button) => (
           <button
             key={button.title}
