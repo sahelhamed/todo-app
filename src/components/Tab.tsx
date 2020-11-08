@@ -17,7 +17,7 @@ const Tab = ({ title, onClick, className, isActive }: Props): ReactElement => {
         isActive
           ? 'bg-white text-blue-500 border-b-0'
           : 'customGray-100 text-gray-500',
-        'text-white border-solid border border-gray-300 font-Roboto font-bold rounded-t-md w-32 py-3 outline-none',
+        'text-sm ext-white border-solid border border-gray-300 font-Roboto font-bold rounded-t-md w-32 py-3 outline-none',
         className,
       )}
       onClick={onClick}

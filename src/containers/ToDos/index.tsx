@@ -135,6 +135,7 @@ const ToDos = (): ReactElement => {
       return (
         <span>
           <input
+            className="transform scale-150"
             type="checkbox"
             checked={todoItem.status === DONE}
             onClick={(): void => {
@@ -261,12 +262,12 @@ const ToDos = (): ReactElement => {
         />
       </div>
       <div className="pt-10 pb-12 text-right">
-        <span className="custom-shadow">
+        <span className="custom-shadow inline-block">
           {buttons.map((button, index) => (
             <button
               key={button.title}
               className={cn(
-                'bg-white border-solid font-Roboto font-bold w-20 py-3 border-gray-300 outline-none',
+                'bg-white border-solid font-Roboto font-bold text-sm w-20 py-3 border-gray-300 outline-none',
                 button.title === timeFilter ? 'text-blue-500' : 'text-gray-600',
                 index === 0 && 'rounded-l-md border-r-0',
                 index === buttons.length - 1 && 'rounded-r-md border-l-0',

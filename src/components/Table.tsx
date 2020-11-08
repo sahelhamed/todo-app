@@ -49,7 +49,7 @@ const Table = ({ data, columns }: Props): ReactElement => {
         {columns.map((item: Column) => (
           <th
             key={item.id}
-            className="py-5 border-solid border-r-0 border-l-0 border-t border-b border-gray-300 text-gray-600 font-Roboto"
+            className="text-left text-lg py-5 border-solid border-r-0 border-l-0 border-t border-b border-gray-300 text-gray-600 font-Roboto"
           >
             {item.title}
           </th>
@@ -62,7 +62,7 @@ const Table = ({ data, columns }: Props): ReactElement => {
           {columns.map((columnItem: Column) => (
             <td
               key={columnItem.id}
-              className="py-12 border-b border-r-0 border-l-0 border-t-0 border-gray-300 border-solid text-center text-black font-Roboto font-medium"
+              className="text-left text-lg py-12 border-b border-r-0 border-l-0 border-t-0 border-gray-300 border-solid text-black font-Roboto font-medium"
             >
               {generateCell(item, columnItem)}
             </td>
