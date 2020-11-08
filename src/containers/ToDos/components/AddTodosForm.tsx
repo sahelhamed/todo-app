@@ -28,8 +28,9 @@ const AddTodosForm = ({ formData, setFormData }: Props): ReactElement => {
     setFormData({ ...formData, [field]: value });
   };
 
-  const handleDateChange = (date: Date): void =>
+  const handleDateChange = (date: Date): void => {
     setFormData({ ...formData, date: date.toString() });
+  };
 
   return (
     <>
@@ -50,6 +51,7 @@ const AddTodosForm = ({ formData, setFormData }: Props): ReactElement => {
           id="status"
           name="status"
           className="p-2 w-full"
+          value={formData.status}
           onChange={(e): void => handleOnChange(e.target.value, 'status')}
         >
           <option value={IN_PROGRESS}>{IN_PROGRESS}</option>

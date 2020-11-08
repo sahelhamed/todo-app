@@ -2,7 +2,7 @@
 import { ReactText } from 'react';
 import moment from 'moment';
 // Constants
-import { DAY, WEEK, YEAR } from '../constants/text';
+import { DAY, MONTH, WEEK } from '../constants/text';
 
 /**
  * Format date
@@ -33,9 +33,10 @@ export const formatTime = (date: ReactText): string => {
  * @param date : date js type
  * @returns {boolean}
  */
-export const filterDatesByCurrentDay = (date: string | number): boolean => {
-  const lastDay = moment().subtract(1, 'days').hours(0);
-  return moment(date) > lastDay;
+const filterDatesByCurrentDay = (date: string | number): boolean => {
+  const startOfDay = moment().startOf('day').toDate();
+  const endOfDay = moment().endOf('day').toDate();
+  return moment(date).isBetween(startOfDay, endOfDay);
 };
 
 /**
@@ -43,9 +44,10 @@ export const filterDatesByCurrentDay = (date: string | number): boolean => {
  * @param date : date js type
  * @returns {boolean}
  */
-export const filterDatesByCurrentWeek = (date: string | number): boolean => {
-  const lastWeek = moment().subtract(7, 'days').hours(0);
-  return moment(date) > lastWeek;
+const filterDatesByCurrentWeek = (date: string | number): boolean => {
+  const startOfWeek = moment().startOf('week').toDate();
+  const endOfWeek = moment().endOf('week').toDate();
+  return moment(date).isBetween(startOfWeek, endOfWeek);
 };
 
 /**
@@ -53,9 +55,10 @@ export const filterDatesByCurrentWeek = (date: string | number): boolean => {
  * @param date : date js type
  * @returns {boolean}
  */
-export const filterDatesByCurrentMonth = (date: string | number): boolean => {
-  const lastMonth = moment().subtract(30, 'days').hours(0);
-  return moment(date) > lastMonth;
+const filterDatesByCurrentMonth = (date: string | number): boolean => {
+  const startOfMonth = moment().startOf('month').toDate();
+  const endOfMonth = moment().endOf('month').toDate();
+  return moment(date).isBetween(startOfMonth, endOfMonth);
 };
 
 /**
@@ -63,9 +66,10 @@ export const filterDatesByCurrentMonth = (date: string | number): boolean => {
  * @param date : date js type
  * @returns {boolean}
  */
-export const filterDatesByCurrentYear = (date: string | number): boolean => {
-  const lastYear = moment().subtract(365, 'days').hours(0);
-  return moment(date) > lastYear;
+const filterDatesByCurrentYear = (date: string | number): boolean => {
+  const startOfYear = moment().startOf('year').toDate();
+  const endOfYear = moment().endOf('year').toDate();
+  return moment(date).isBetween(startOfYear, endOfYear);
 };
 
 /**
@@ -83,9 +87,9 @@ export const filterDates = (
       return filterDatesByCurrentDay(date);
     case WEEK:
       return filterDatesByCurrentWeek(date);
-    case YEAR:
-      return filterDatesByCurrentYear(date);
+    case MONTH:
+      return filterDatesByCurrentMonth(date);
     default:
-      return filterDatesByCurrentWeek(date);
+      return filterDatesByCurrentYear(date);
   }
 };

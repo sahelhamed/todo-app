@@ -14,4 +14,4 @@ export const IN_PROGRESS = 'In Progress';
 export const PAUSED = 'Paused';
 export const DAY = 'Day';
 export const WEEK = 'Week';
-export const YEAR = 'Year';
+export const MONTH = 'Month';
