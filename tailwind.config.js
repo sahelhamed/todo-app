@@ -10,6 +10,9 @@ module.exports = {
         orange: {
           '100': '#FFA700',
         },
+        customGray: {
+          '100': '#F8F8F8',
+        },
       },
       },
     },
