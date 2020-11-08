@@ -190,7 +190,12 @@ const ToDos = (): ReactElement => {
       // Create mode
       setTodos([
         ...todos,
-        { id: todos.length + 1, ...formData, date: new Date().toString() },
+        {
+          id: todos.length + 1,
+          ...formData,
+          status: formData.status || IN_PROGRESS,
+          date: formData.date || new Date().toString(),
+        },
       ]);
     }
     closeModal();

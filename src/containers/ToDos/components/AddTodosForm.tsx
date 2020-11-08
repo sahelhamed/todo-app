@@ -28,8 +28,9 @@ const AddTodosForm = ({ formData, setFormData }: Props): ReactElement => {
     setFormData({ ...formData, [field]: value });
   };
 
-  const handleDateChange = (date: Date): void =>
+  const handleDateChange = (date: Date): void => {
     setFormData({ ...formData, date: date.toString() });
+  };
 
   return (
     <>
