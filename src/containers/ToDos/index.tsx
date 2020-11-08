@@ -1,5 +1,6 @@
 // Node_modules
 import React, { ReactElement, useCallback, useState } from 'react';
+import cn from 'classnames';
 // Components
 import Table from '../../components/Table';
 import Label from '../../components/Label';
@@ -246,7 +247,10 @@ const ToDos = (): ReactElement => {
         {buttons.map((button) => (
           <button
             key={button.title}
-            className="bg-white font-Roboto font-bold rounded-md px-5 py-3"
+            className={cn(
+              'bg-white font-Roboto font-bold rounded-md px-5 py-3 border-gray-300 outline-none',
+              button.title === timeFilter ? 'text-blue-500' : 'text-gray-600',
+            )}
             type="button"
             onClick={button.onClick}
           >
