@@ -21,7 +21,7 @@ import {
   DONE,
   DAY,
   WEEK,
-  YEAR,
+  MONTH,
   EDIT_TASK,
 } from '../../constants/text';
 import COLUMN_TYPE_KEYS from '../../constants/constants';
@@ -44,7 +44,7 @@ const ToDos = (): ReactElement => {
   // States
   const [todos, setTodos] = useState<Data[]>(initialTodos);
   const [isDoneList, setIsDoneList] = useState<boolean>(false);
-  const [timeFilter, setTimeFilter] = useState<string>(WEEK);
+  const [timeFilter, setTimeFilter] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [formData, setFormData] = useState<Data>({});
 
@@ -216,8 +216,8 @@ const ToDos = (): ReactElement => {
       onClick: (): void => setTimeFilter(WEEK),
     },
     {
-      title: YEAR,
-      onClick: (): void => setTimeFilter(YEAR),
+      title: MONTH,
+      onClick: (): void => setTimeFilter(MONTH),
     },
   ];
 
