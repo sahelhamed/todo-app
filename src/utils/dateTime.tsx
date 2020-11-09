@@ -36,7 +36,7 @@ export const formatTime = (date: ReactText): string => {
 const filterDatesByCurrentDay = (date: string | number): boolean => {
   const startOfDay = moment().startOf('day').toDate();
   const endOfDay = moment().endOf('day').toDate();
-  return moment(date).isBetween(startOfDay, endOfDay);
+  return moment(new Date(date)).isBetween(startOfDay, endOfDay);
 };
 
 /**
@@ -47,7 +47,7 @@ const filterDatesByCurrentDay = (date: string | number): boolean => {
 const filterDatesByCurrentWeek = (date: string | number): boolean => {
   const startOfWeek = moment().startOf('week').toDate();
   const endOfWeek = moment().endOf('week').toDate();
-  return moment(date).isBetween(startOfWeek, endOfWeek);
+  return moment(new Date(date)).isBetween(startOfWeek, endOfWeek);
 };
 
 /**
@@ -58,7 +58,7 @@ const filterDatesByCurrentWeek = (date: string | number): boolean => {
 const filterDatesByCurrentMonth = (date: string | number): boolean => {
   const startOfMonth = moment().startOf('month').toDate();
   const endOfMonth = moment().endOf('month').toDate();
-  return moment(date).isBetween(startOfMonth, endOfMonth);
+  return moment(new Date(date)).isBetween(startOfMonth, endOfMonth);
 };
 
 /**
@@ -69,7 +69,7 @@ const filterDatesByCurrentMonth = (date: string | number): boolean => {
 const filterDatesByCurrentYear = (date: string | number): boolean => {
   const startOfYear = moment().startOf('year').toDate();
   const endOfYear = moment().endOf('year').toDate();
-  return moment(date).isBetween(startOfYear, endOfYear);
+  return moment(new Date(date)).isBetween(startOfYear, endOfYear);
 };
 
 /**

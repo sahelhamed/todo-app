@@ -46,13 +46,12 @@ const AddTodosForm = ({ formData, setFormData }: Props): ReactElement => {
       <div className="mb-2">
         <span className="font-medium font-Roboto font-base">{STATUS}:</span>
         <br />
-        {/* eslint-disable-next-line jsx-a11y/no-onchange */}
         <select
           id="status"
           name="status"
           className="p-2 w-full"
           value={formData.status}
-          onChange={(e): void => handleOnChange(e.target.value, 'status')}
+          onBlur={(e): void => handleOnChange(e.target.value, 'status')}
         >
           <option value={IN_PROGRESS}>{IN_PROGRESS}</option>
           <option value={PAUSED}>{PAUSED}</option>
