@@ -82,6 +82,18 @@ const Table = ({ data, columns }: Props): ReactElement => {
   return (
     <table className="table-auto w-full">
       {/* --------------------------Table header-------------------------- */}
+      <thead>
+        <tr>
+          {columns.map((item: Column) => (
+            <th
+              key={item.id}
+              className="text-left text-lg py-5 border-solid border-r-0 border-l-0 border-t border-b border-gray-300 text-gray-600 font-Roboto"
+            >
+              {item.title}
+            </th>
+          ))}
+        </tr>
+      </thead>
       <tr>
         {columns.map((item: Column) => (
           <th
@@ -103,6 +115,20 @@ const Table = ({ data, columns }: Props): ReactElement => {
       </tr>
 
       {/* --------------------------Table body-------------------------- */}
+      <tbody>
+        {data.map((item: Data) => (
+          <tr key={item.id}>
+            {columns.map((columnItem: Column) => (
+              <td
+                key={columnItem.id}
+                className="text-left text-lg py-12 border-b border-r-0 border-l-0 border-t-0 border-gray-300 border-solid text-black font-Roboto font-medium"
+              >
+                {generateCell(item, columnItem)}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
       {handleSort().map((item: Data) => (
         <tr key={item.id}>
           {columns.map((columnItem: Column) => (

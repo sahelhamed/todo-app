@@ -154,7 +154,7 @@ const ToDos = (): ReactElement => {
             className="transform scale-150"
             type="checkbox"
             checked={todoItem.status === DONE}
-            onClick={(): void => {
+            onChange={(): void => {
               toggleStatus(todoItem);
             }}
           />
