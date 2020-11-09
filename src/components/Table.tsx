@@ -52,7 +52,7 @@ const Table = ({ data, columns }: Props): ReactElement => {
   };
 
   /**
-   * A selected sorted field
+   * set selected sorted field and isAscending state
    * @param field: column that should sort
    */
   const selectSortedField = (field: string): void => {
@@ -60,6 +60,7 @@ const Table = ({ data, columns }: Props): ReactElement => {
       setIsAscending(!isAscending);
     } else {
       setSortedField(field);
+      setIsAscending(true);
     }
   };
 
@@ -96,7 +97,13 @@ const Table = ({ data, columns }: Props): ReactElement => {
                   <Button
                     className="mt-1"
                     onClick={(): void => selectSortedField(item.column)}
-                    icon={isAscending ? <DownIcon /> : <UpIcon />}
+                    icon={
+                      !isAscending && sortedField === item.column ? (
+                        <UpIcon />
+                      ) : (
+                        <DownIcon />
+                      )
+                    }
                   />
                 )}
               </span>
