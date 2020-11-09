@@ -26,13 +26,13 @@ const initialTodos: Data[] = [
     id: 4,
     task: 'Task #4',
     status: IN_PROGRESS,
-    date: 'Sat Oct 1 2019 14:52:01 GMT+0330 (Iran Standard Time)',
+    date: 'Sat Oct 01 2019 14:52:01 GMT+0330 (Iran Standard Time)',
   },
   {
     id: 5,
     task: 'Task #5',
     status: IN_PROGRESS,
-    date: 'Sat Aug 1 2020 14:52:01 GMT+0330 (Iran Standard Time)',
+    date: 'Sat Aug 01 2020 14:52:01 GMT+0330 (Iran Standard Time)',
   },
   {
     id: 6,
@@ -75,6 +75,18 @@ const initialTodos: Data[] = [
     task: 'Task #8',
     status: DONE,
     date: 'Sun Nov 11 2020 00:00:00 GMT+0330 (Iran Standard Time)',
+  },
+  {
+    id: 13,
+    task: 'Task #9',
+    status: IN_PROGRESS,
+    date: 'Sun Jan 11 2020 00:00:00 GMT+0330 (Iran Standard Time)',
+  },
+  {
+    id: 14,
+    task: 'Task #10',
+    status: IN_PROGRESS,
+    date: 'Sun Apr 11 2020 00:00:00 GMT+0330 (Iran Standard Time)',
   },
 ];
 

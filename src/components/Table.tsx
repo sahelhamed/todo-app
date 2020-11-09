@@ -1,5 +1,6 @@
 // Node_modules
 import React, { ReactElement, memo, useState } from 'react';
+import moment from 'moment';
 import { isEqual } from 'lodash';
 // Models
 import { Column, Data } from '../models/table';
@@ -65,19 +66,49 @@ const Table = ({ data, columns }: Props): ReactElement => {
   };
 
   /**
+   * A function for sort date column in table
+   * @param itemOne: First item
+   * @param itemTow: Second item
+   */
+  const handleDateSort = (itemOne: Data, itemTow: Data): number => {
+    if (
+      moment(new Date(itemOne[sortedField])).isBefore(
+        new Date(itemTow[sortedField]),
+      )
+    ) {
+      return isAscending ? -1 : 1;
+    }
+    if (
+      moment(new Date(itemOne[sortedField])).isAfter(
+        new Date(itemTow[sortedField]),
+      )
+    ) {
+      return isAscending ? 1 : -1;
+    }
+    return 0;
+  };
+
+  /**
+   * A function for sort string column in table
+   * @param itemOne: First item
+   * @param itemTow: Second item
+   */
+  const handleStringSort = (itemOne: Data, itemTow: Data): number => {
+    if (itemOne[sortedField] < itemTow[sortedField]) {
+      return isAscending ? -1 : 1;
+    }
+    if (itemOne[sortedField] > itemTow[sortedField]) {
+      return isAscending ? 1 : -1;
+    }
+    return 0;
+  };
+
+  /**
    * A function for sort data in table
    */
   const handleSort = (): Data[] => {
     return sortedField !== ''
-      ? data.sort((itemOne: Data, itemTow: Data): number => {
-          if (itemOne[sortedField] < itemTow[sortedField]) {
-            return isAscending ? -1 : 1;
-          }
-          if (itemOne[sortedField] > itemTow[sortedField]) {
-            return isAscending ? 1 : -1;
-          }
-          return 0;
-        })
+      ? data.sort(sortedField === 'date' ? handleDateSort : handleStringSort)
       : data;
   };
 
