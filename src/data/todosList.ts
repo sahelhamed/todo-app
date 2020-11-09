@@ -68,7 +68,7 @@ const initialTodos: Data[] = [
     id: 11,
     task: 'Task #7',
     status: DONE,
-    date: 'Sun Nov 09 2020 00:00:00 GMT+0330 (Iran Standard Time)',
+    date: 'Sun Nov 09 2020 14:52:01 GMT+0330 (Iran Standard Time)',
   },
   {
     id: 12,
