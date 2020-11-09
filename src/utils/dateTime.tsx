@@ -64,17 +64,6 @@ const filterDatesByCurrentMonth = (date: string | number): boolean => {
 /**
  * Get time from date
  * @param date : date js type
- * @returns {boolean}
- */
-const filterDatesByCurrentYear = (date: string | number): boolean => {
-  const startOfYear = moment().startOf('year').toDate();
-  const endOfYear = moment().endOf('year').toDate();
-  return moment(new Date(date)).isBetween(startOfYear, endOfYear);
-};
-
-/**
- * Get time from date
- * @param date : date js type
  * @param filterType : type of filter
  * @returns {boolean}
  */
@@ -90,6 +79,6 @@ export const filterDates = (
     case MONTH:
       return filterDatesByCurrentMonth(date);
     default:
-      return filterDatesByCurrentYear(date);
+      return true;
   }
 };

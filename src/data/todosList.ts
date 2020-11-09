@@ -46,6 +46,36 @@ const initialTodos: Data[] = [
     status: IN_PROGRESS,
     date: 'Sat Oct 30 2020 14:52:01 GMT+0330 (Iran Standard Time)',
   },
+  {
+    id: 8,
+    task: 'Task',
+    status: IN_PROGRESS,
+    date: 'Sun Nov 06 2020 00:00:00 GMT+0330 (Iran Standard Time)',
+  },
+  {
+    id: 9,
+    task: 'My Task',
+    status: PAUSED,
+    date: 'Sun Nov 07 2020 00:00:00 GMT+0330 (Iran Standard Time)',
+  },
+  {
+    id: 10,
+    task: 'Second Task',
+    status: DONE,
+    date: 'Sun Nov 08 2020 00:00:00 GMT+0330 (Iran Standard Time)',
+  },
+  {
+    id: 11,
+    task: 'Task #7',
+    status: DONE,
+    date: 'Sun Nov 09 2020 14:52:01 GMT+0330 (Iran Standard Time)',
+  },
+  {
+    id: 12,
+    task: 'Task #8',
+    status: DONE,
+    date: 'Sun Nov 11 2020 00:00:00 GMT+0330 (Iran Standard Time)',
+  },
 ];
 
 export default initialTodos;

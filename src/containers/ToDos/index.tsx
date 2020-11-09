@@ -37,11 +37,6 @@ import { filterDates } from '../../utils/dateTime';
 // Data
 import initialTodos from '../../data/todosList';
 
-interface ButtonType {
-  title?: string | number;
-  onClick: () => void;
-}
-
 const ToDos = (): ReactElement => {
   // States
   const [todos, setTodos] = useState<Data[]>(initialTodos);
@@ -199,6 +194,14 @@ const ToDos = (): ReactElement => {
     );
   }, [isDoneList, timeFilter, todos]);
 
+  /**
+   * A function for set filter
+   * @param field: filter field
+   */
+  const setFilter = (field: string): void => {
+    setTimeFilter(timeFilter === field ? '' : field);
+  };
+
   const columns: Column[] = [
     {
       id: 0,
@@ -243,20 +246,7 @@ const ToDos = (): ReactElement => {
     },
   ];
 
-  const buttons: ButtonType[] = [
-    {
-      title: MONTH,
-      onClick: (): void => setTimeFilter(MONTH),
-    },
-    {
-      title: WEEK,
-      onClick: (): void => setTimeFilter(WEEK),
-    },
-    {
-      title: DAY,
-      onClick: (): void => setTimeFilter(DAY),
-    },
-  ];
+  const buttons: string[] = [MONTH, WEEK, DAY];
 
   return (
     <div className="flex flex-col">
@@ -283,17 +273,17 @@ const ToDos = (): ReactElement => {
         <span className="custom-shadow inline-block">
           {buttons.map((button, index) => (
             <button
-              key={button.title}
+              key={button}
               className={cn(
                 'bg-white border-solid font-Roboto font-bold text-sm w-20 py-3 border-gray-300 outline-none',
-                button.title === timeFilter ? 'text-blue-500' : 'text-gray-600',
+                button === timeFilter ? 'text-blue-500' : 'text-gray-600',
                 index === 0 && 'rounded-l-md border-r-0',
                 index === buttons.length - 1 && 'rounded-r-md border-l-0',
               )}
               type="button"
-              onClick={button.onClick}
+              onClick={(): void => setFilter(button)}
             >
-              {button.title}
+              {button}
             </button>
           ))}
         </span>
