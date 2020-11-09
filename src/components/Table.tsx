@@ -7,6 +7,7 @@ import { Column, Data } from '../models/table';
 import COLUMN_TYPE_KEYS from '../constants/constants';
 // Utils
 import { formatDate, formatTime } from '../utils/dateTime';
+// Components
 import Button from './Button';
 // Icons
 import UpIcon from '../icons/UpIcon';
@@ -89,39 +90,28 @@ const Table = ({ data, columns }: Props): ReactElement => {
               key={item.id}
               className="text-left text-lg py-5 border-solid border-r-0 border-l-0 border-t border-b border-gray-300 text-gray-600 font-Roboto"
             >
-              {item.title}
+              <span className="flex justify-center items-center">
+                <span>{item.title}</span>
+                {item.isSortable && (
+                  <Button
+                    className="mt-1"
+                    onClick={(): void => selectSortedField(item.column)}
+                    icon={isAscending ? <DownIcon /> : <UpIcon />}
+                  />
+                )}
+              </span>
             </th>
           ))}
         </tr>
       </thead>
-      <tr>
-        {columns.map((item: Column) => (
-          <th
-            key={item.id}
-            className="text-left text-lg py-5 border-solid border-r-0 border-l-0 border-t border-b border-gray-300 text-gray-600 font-Roboto"
-          >
-            <span className="flex justify-center items-center">
-              <span>{item.title}</span>
-              {item.isSortable && (
-                <Button
-                  className="mt-1"
-                  onClick={(): void => selectSortedField(item.column)}
-                  icon={isAscending ? <DownIcon /> : <UpIcon />}
-                />
-              )}
-            </span>
-          </th>
-        ))}
-      </tr>
-
       {/* --------------------------Table body-------------------------- */}
       <tbody>
-        {data.map((item: Data) => (
+        {handleSort().map((item: Data) => (
           <tr key={item.id}>
             {columns.map((columnItem: Column) => (
               <td
                 key={columnItem.id}
-                className="text-left text-lg py-12 border-b border-r-0 border-l-0 border-t-0 border-gray-300 border-solid text-black font-Roboto font-medium"
+                className="text-center text-lg py-12 border-b border-r-0 border-l-0 border-t-0 border-gray-300 border-solid text-black font-Roboto font-medium"
               >
                 {generateCell(item, columnItem)}
               </td>
@@ -129,18 +119,6 @@ const Table = ({ data, columns }: Props): ReactElement => {
           </tr>
         ))}
       </tbody>
-      {handleSort().map((item: Data) => (
-        <tr key={item.id}>
-          {columns.map((columnItem: Column) => (
-            <td
-              key={columnItem.id}
-              className="text-center text-lg py-12 border-b border-r-0 border-l-0 border-t-0 border-gray-300 border-solid text-black font-Roboto font-medium"
-            >
-              {generateCell(item, columnItem)}
-            </td>
-          ))}
-        </tr>
-      ))}
     </table>
   );
 };
