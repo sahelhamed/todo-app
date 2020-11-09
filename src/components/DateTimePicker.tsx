@@ -1,32 +1,30 @@
 // Node modules
 import React, { memo, ReactElement } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import { Moment } from 'moment';
+import Datetime from 'react-datetime';
+import 'react-datetime/css/react-datetime.css';
 
 interface Props {
   selected: string | number;
-  handleDateChange: (date: Date) => void;
+  handleDateChange: (date: string | Moment) => void;
   className?: string;
-  isClearable?: boolean;
 }
 
 const DateTimePicker = ({
-  isClearable,
   selected,
   handleDateChange,
   className,
 }: Props): ReactElement => {
   return (
-    <DatePicker
-      isClearable={isClearable}
-      selected={selected ? new Date(selected) : new Date()}
+    <Datetime
+      value={selected ? new Date(selected) : new Date()}
       onChange={handleDateChange}
-      className={`p-2 ${className}`}
+      inputProps={{ className: `p-2 ${className}` }}
     />
   );
 };
+
 DateTimePicker.defaultProps = {
-  isClearable: true,
   className: '',
 };
 

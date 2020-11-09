@@ -1,5 +1,6 @@
 // Node_modules
 import React, { ReactElement } from 'react';
+import { Moment } from 'moment';
 // Constants
 import {
   DATE,
@@ -28,7 +29,7 @@ const AddTodosForm = ({ formData, setFormData }: Props): ReactElement => {
     setFormData({ ...formData, [field]: value });
   };
 
-  const handleDateChange = (date: Date): void => {
+  const handleDateChange = (date: string | Moment): void => {
     setFormData({ ...formData, date: date.toString() });
   };
 
@@ -41,6 +42,14 @@ const AddTodosForm = ({ formData, setFormData }: Props): ReactElement => {
           className="p-2"
           value={formData.task}
           onChange={(e): void => handleOnChange(e.target.value, 'task')}
+        />
+      </div>
+      <div className="mb-2">
+        <span className="font-medium font-Roboto font-base">{DATE}:</span>
+        <br />
+        <DateTimePicker
+          handleDateChange={handleDateChange}
+          selected={formData.date}
         />
       </div>
       <div className="mb-2">
@@ -57,15 +66,6 @@ const AddTodosForm = ({ formData, setFormData }: Props): ReactElement => {
           <option value={IN_PROGRESS}>{IN_PROGRESS}</option>
           <option value={PAUSED}>{PAUSED}</option>
         </select>
-      </div>
-      <div className="mb-2">
-        <span className="font-medium font-Roboto font-base">{DATE}:</span>
-        <br />
-        <DateTimePicker
-          handleDateChange={handleDateChange}
-          selected={formData.date}
-          isClearable={false}
-        />
       </div>
     </>
   );
