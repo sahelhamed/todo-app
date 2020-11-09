@@ -1,5 +1,5 @@
 // Node_modules
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useCallback } from 'react';
 import { Moment } from 'moment';
 // Constants
 import {
@@ -29,9 +29,12 @@ const AddTodosForm = ({ formData, setFormData }: Props): ReactElement => {
     setFormData({ ...formData, [field]: value });
   };
 
-  const handleDateChange = (date: string | Moment): void => {
-    setFormData({ ...formData, date: date.toString() });
-  };
+  const handleDateChange = useCallback(
+    (date: string | Moment): void => {
+      setFormData({ ...formData, date: date.toString() });
+    },
+    [formData, setFormData],
+  );
 
   return (
     <>

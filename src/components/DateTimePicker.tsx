@@ -1,5 +1,6 @@
 // Node modules
 import React, { memo, ReactElement } from 'react';
+import { isEqual } from 'lodash';
 import { Moment } from 'moment';
 import Datetime from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
@@ -28,4 +29,13 @@ DateTimePicker.defaultProps = {
   className: '',
 };
 
-export default memo(DateTimePicker);
+const areEqual = (prevProps: Props, nextProps: Props): boolean => {
+  /*
+  return true if passing nextProps to render would return
+  the same result as passing prevProps to render,
+  otherwise return false
+  */
+  return isEqual(prevProps.selected, nextProps.selected);
+};
+
+export default memo(DateTimePicker, areEqual);
