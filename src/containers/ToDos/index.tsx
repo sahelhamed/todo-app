@@ -273,7 +273,7 @@ const ToDos = (): ReactElement => {
             <button
               key={button}
               className={cn(
-                'bg-white border-solid font-Roboto font-bold text-sm w-20 py-3 border-gray-300 outline-none',
+                'bg-white border-solid font-Roboto font-bold text-sm w-20 py-3 border-gray-300 outline-none cursor-pointer',
                 button === timeFilter ? 'text-blue-500' : 'text-gray-600',
                 index === 0 && 'rounded-l-md border-r-0',
                 index === buttons.length - 1 && 'rounded-r-md border-l-0',
