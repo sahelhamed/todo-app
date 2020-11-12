@@ -1,0 +1,17 @@
+export const TASKS = 'Tasks';
+export const TASK = 'Task';
+export const STATUS = 'Status';
+export const DATE = 'Date';
+export const TIME = 'Time';
+export const ADD_TASK = 'Add Task';
+export const EDIT_TASK = 'Edit Task';
+export const SUBMIT = 'Submit';
+export const CANCEL = 'Cancel';
+export const TODO = 'To Do';
+export const DONE_TASKS = 'Done Tasks';
+export const DONE = 'Done';
+export const IN_PROGRESS = 'In Progress';
+export const PAUSED = 'Paused';
+export const DAY = 'Day';
+export const WEEK = 'Week';
+export const MONTH = 'Month';
