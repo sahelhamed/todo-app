@@ -1,5 +1,6 @@
 // Node_modules
 import React, { ReactElement, memo, useState } from 'react';
+import cn from 'classnames';
 import moment from 'moment';
 import { isEqual } from 'lodash';
 // Models
@@ -8,8 +9,6 @@ import { Column, Data } from '../models/table';
 import COLUMN_TYPE_KEYS from '../constants/constants';
 // Utils
 import { formatDate, formatTime } from '../utils/dateTime';
-// Components
-import Button from './Button';
 // Icons
 import UpIcon from '../icons/UpIcon';
 import DownIcon from '../icons/DownIcon';
@@ -21,7 +20,7 @@ interface Props {
 
 const Table = ({ data, columns }: Props): ReactElement => {
   // States
-  const [sortedField, setSortedField] = useState<string>('');
+  const [sortedField, setSortedField] = useState<string | number>('');
   const [isAscending, setIsAscending] = useState<boolean>(true);
 
   /**
@@ -54,13 +53,16 @@ const Table = ({ data, columns }: Props): ReactElement => {
 
   /**
    * set selected sorted field and isAscending state
-   * @param field: column that should sort
+   * @param item: object type of column model
    */
-  const selectSortedField = (field: string): void => {
-    if (sortedField === field) {
+  const selectSortedField = (item: Column): void => {
+    if (!item.isSortable) {
+      return;
+    }
+    if (sortedField === item.column) {
       setIsAscending(!isAscending);
     } else {
-      setSortedField(field);
+      setSortedField(item.column);
       setIsAscending(true);
     }
   };
@@ -120,24 +122,29 @@ const Table = ({ data, columns }: Props): ReactElement => {
           {columns.map((item: Column) => (
             <th
               key={item.id}
-              className="text-left text-lg py-5 border-solid border-r-0 border-l-0 border-t border-b border-gray-300 text-gray-600 font-Roboto"
+              className="text-left py-5 border-solid border-r-0 border-l-0 border-t border-b border-gray-300"
             >
-              <span className="flex items-center">
-                <span>{item.title}</span>
-                {item.isSortable && (
-                  <Button
-                    className="mt-1"
-                    onClick={(): void => selectSortedField(item.column)}
-                    icon={
-                      !isAscending && sortedField === item.column ? (
-                        <UpIcon />
-                      ) : (
-                        <DownIcon />
-                      )
-                    }
-                  />
-                )}
-              </span>
+              <button
+                className="flex items-center bg-white text-lg text-gray-600 font-Roboto border-none outline-none"
+                type="button"
+                onClick={(): void => selectSortedField(item)}
+              >
+                {item.title}
+                <span
+                  className={cn(
+                    'ml-1 mt-1',
+                    item.isSortable && sortedField === item.column
+                      ? 'visible'
+                      : 'invisible',
+                  )}
+                >
+                  {!isAscending && sortedField === item.column ? (
+                    <UpIcon />
+                  ) : (
+                    <DownIcon />
+                  )}
+                </span>
+              </button>
             </th>
           ))}
         </tr>
